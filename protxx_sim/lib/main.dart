@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 import './questions.dart';
 
 void main() {
   runApp(MyApp());
-
 }
 
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return MyAppState();
   }
 }
 
 class MyAppState extends State<MyApp>{
-  var questionIndex = 0;
   Stream<int> timedCounter(Duration interval, [int maxCount]) async* {
     int i = 0;
     while (true) {
@@ -32,7 +28,6 @@ class MyAppState extends State<MyApp>{
   void listenWithPause() {
     var counterStream = timedCounter(const Duration(seconds: 1), 15);
     StreamSubscription<AccelerometerEvent> subscription;
-
     subscription = accelerometerEvents.listen((AccelerometerEvent event) {
       print(event); // Print an integer every second
     }
