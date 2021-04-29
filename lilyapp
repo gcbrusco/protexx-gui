@@ -13,7 +13,16 @@ class Home extends StatelessWidget {
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
-            title: Text('Welcome to PROTXX'), backgroundColor: Colors.red),
+            title: Text('Welcome to PROTXX'),
+            backgroundColor: Colors.red,
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    //TODO: CHANGE TO HOME SCREEN
+                    Navigator.of(context).pushNamed("/");
+                  }),
+            ]),
         body: Column(
           children: [
             Container(
@@ -21,8 +30,8 @@ class Home extends StatelessWidget {
                 margin: EdgeInsets.all(10),
                 child: Text(
                   'Welcome to the PROTXX sensor home page.'
-                  ' From here, you can choose to perform a new test '
-                  'or view past data.',
+                      ' From here, you can choose to perform a new test '
+                      'or view past data.',
                   style: TextStyle(color: Colors.white, fontSize: 28),
                   textAlign: TextAlign.center,
                 )),
@@ -74,7 +83,7 @@ class Complete extends StatelessWidget {
                 margin: EdgeInsets.all(10),
                 child: Text(
                   'Your test is complete. Please choose an option '
-                  'from the selection below',
+                      'from the selection below',
                   style: TextStyle(color: Colors.white, fontSize: 28),
                   textAlign: TextAlign.center,
                 )),
@@ -106,21 +115,19 @@ class Complete extends StatelessWidget {
                 );
               },
             ),
-            FloatingActionButton(
-              child: Icon(Icons.home),
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home()),
-                );
-              },
-            ),
           ],
         ),
         appBar:
-            AppBar(title: Text('Test Complete'), backgroundColor: Colors.red),
+        AppBar(title: Text('Test Complete'),
+            backgroundColor: Colors.red,
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    //TODO: CHANGE TO HOME SCREEN
+                    Navigator.of(context).pushNamed("/");
+                  }),
+            ]),
       ),
     );
   } // Widget
@@ -156,20 +163,18 @@ class NewTest extends StatelessWidget {
                 );
               },
             ),
-            FloatingActionButton(
-              child: Icon(Icons.home),
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home()),
-                );
-              },
-            ),
           ],
         ),
-        appBar: AppBar(title: Text('PROTXX Test'), backgroundColor: Colors.red),
+        appBar: AppBar(title: Text('PROTXX Test'),
+            backgroundColor: Colors.red,
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    //TODO: CHANGE TO HOME SCREEN
+                    Navigator.of(context).pushNamed("/");
+                  }),
+            ]),
       ),
     );
   } // Widget
@@ -184,7 +189,14 @@ class Data extends StatelessWidget {
         appBar: AppBar(
           title: Text("Data"),
           backgroundColor: Colors.red,
-        ),
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    //TODO: CHANGE TO HOME SCREEN
+                    Navigator.of(context).pushNamed("/");
+                  }),
+            ]),
         body: Column(
           children: [
             Container(
@@ -208,7 +220,14 @@ class RetakeTest extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Retake Test"),
-      ),
-    );
+          actions: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () {
+                  //TODO: CHANGE TO HOME SCREEN
+                  Navigator.of(context).pushNamed("/");
+                }),
+          ]),
+      );
   }
 }
