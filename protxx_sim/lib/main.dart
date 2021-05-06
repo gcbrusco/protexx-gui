@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -75,6 +74,17 @@ class Home extends StatelessWidget {
               padding: EdgeInsets.all(5),
               onPressed: () {
                 Navigator.of(context).pushNamed("/data");
+              },
+            ),
+            RaisedButton.icon(
+              label: Text('Compare Results'),
+              icon: Icon(Icons.info, color: Colors.black),
+              textColor: Colors.white,
+              splashColor: Colors.red,
+              color: Colors.red,
+              padding: EdgeInsets.all(5),
+              onPressed: () {
+                Navigator.of(context).pushNamed("/compare");
               },
             ),
           ],
@@ -201,29 +211,39 @@ class DataPage extends StatelessWidget {
                       Navigator.of(context).pushNamed("/");
                     }),
               ]),
-          body: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: names.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  height: 50,
-                  margin: EdgeInsets.all(2),
-                  color: index >= 10
-                      ? Colors.blue[400]
-                      : index > 3
-                      ? Colors.blue[100]
-                      : Colors.grey,
-                  child: Center(
-                      child: Text(
-                        '${names[index].month}/${names[index].day}/${names[index].year}'
-                            ' at ${names[index].hour}:${names[index].minute}',
-                        style: TextStyle(fontSize: 18),
-                      )),
-                );
-              })),
+          body: ListView.separated(
+            padding: const EdgeInsets.all(8),
+            itemCount: names.length,
+            itemBuilder: (context, index) {
+              return new Card (
+              child: new ListTile(
+                tileColor: Colors.red,
+                trailing: Icon(Icons.insert_chart_outlined, color: Colors.white),
+                title: FlatButton(
+                  child: new Text('${names[index].month}/${names[index].day}/${names[index].year}'
+                    ' at ${names[index].hour}:${names[index].minute}',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  textAlign: TextAlign.left,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    '/graph',
+                    arguments: names[index],
+                  );
+                },
+              ),),
+              );
+              },
+            separatorBuilder: (context, index) {
+              return Divider(
+                color: Colors.black,
+              );
+            },
+          )),
     );
   }
 }
+
 
 class RetakeTest extends StatelessWidget {
   @override
