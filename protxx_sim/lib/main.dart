@@ -199,6 +199,9 @@ class DataPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/graph': (BuildContext context) => GraphPage(),
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
           appBar: AppBar(
@@ -216,24 +219,24 @@ class DataPage extends StatelessWidget {
             itemCount: names.length,
             itemBuilder: (context, index) {
               return new Card (
-              child: new ListTile(
-                tileColor: Colors.red,
-                trailing: Icon(Icons.insert_chart_outlined, color: Colors.white),
-                title: FlatButton(
-                  child: new Text('${names[index].month}/${names[index].day}/${names[index].year}'
-                    ' at ${names[index].hour}:${names[index].minute}',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  textAlign: TextAlign.left,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    '/graph',
-                    arguments: names[index],
-                  );
-                },
-              ),),
+                child: new ListTile(
+                  tileColor: Colors.red,
+                  trailing: Icon(Icons.insert_chart_outlined, color: Colors.white),
+                  title: FlatButton(
+                    child: new Text('${names[index].month}/${names[index].day}/${names[index].year}'
+                        ' at ${names[index].hour}:${names[index].minute}',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      textAlign: TextAlign.left,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        "/graph",
+                        arguments: names[index],
+                      );
+                    },
+                  ),),
               );
-              },
+            },
             separatorBuilder: (context, index) {
               return Divider(
                 color: Colors.black,
