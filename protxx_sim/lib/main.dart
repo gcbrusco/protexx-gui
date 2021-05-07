@@ -329,7 +329,13 @@ class Test extends State<TestPage> {
     Timer timer;
     StreamSubscription accel;
 
-    print("START");
+    double vx;
+    double vy;
+    double vz;
+    double powerX;
+    double powerY;
+    double powerZ;
+
     int count = 0;
     if (accel == null) {
       accel = userAccelerometerEvents.listen((UserAccelerometerEvent eve) {
@@ -347,10 +353,23 @@ class Test extends State<TestPage> {
           accel.pause();
         } else {
           chartData[count] =
-              Data(count.toDouble(), event.x, event.y, event.z);
+              Data(count.toDouble(), event.x, event.y, event.z, 0);
+
+          if (count == 0){
+            vx = 0;
+            vy = 0;
+            vz = 0;
+          } else {
+            vx = (chartData[count].x - chartData[count - 1].x) * .1;
+            vy = (chartData[count].y - chartData[count - 1].y) * .1;
+            vz = (chartData[count].z - chartData[count - 1].z) * .1;
+          }
+          powerX = vx * chartData[count].x;
+          powerY = vy * chartData[count].y;
+          powerZ = vz * chartData[count].z;
+          chartData[count].power = (powerX+powerY+powerZ)/3;
+
           count++;
-          print(count);
-          print(selection);
         }
       });
     }
@@ -810,6 +829,7 @@ class Data {
   double x;
   double y;
   double z;
+  double power;
 
-  Data(this.time, this.x, this.y, this.z);
+  Data(this.time, this.x, this.y, this.z, this.power);
 }
