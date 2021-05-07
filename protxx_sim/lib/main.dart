@@ -4,7 +4,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:sensors/sensors.dart';
 import 'package:time/time.dart';
 
-Map<DateTime, List<Data>> tests = new Map();
+Map<DateTime, List<Data>> testsOpen = new Map();
+Map<DateTime, List<Data>> testsClosed = new Map();
 
 void main() {
   runApp(
@@ -137,7 +138,7 @@ class NewTest extends StatelessWidget {
 }
 
 class DataPage extends StatelessWidget {
-  final List names = tests.keys.toList();
+  final List names = testsOpen.keys.toList();
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +190,6 @@ class DataPage extends StatelessWidget {
     );
   }
 }
-
 
 class RetakeTest extends StatelessWidget {
   @override
@@ -309,7 +309,8 @@ class TestPage extends StatefulWidget {
 
 class Test extends State<TestPage> {
   int selection;
-  List<Data> chartData;
+  List<Data> chartDataOpen;
+  List<Data> chartDataClosed;
   DateTime time = DateTime.now();
 
   @override
@@ -322,16 +323,11 @@ class Test extends State<TestPage> {
   List<Data> getChartData() {
     //TODO: Make sure the data list has the # of element because right now it only works with 10 sec tests
     //find accelerometer data
-    List<Data> chartData = new List(selection);
+    int numData = (10*selection)+1;
+    List<Data> chartData = new List(numData);
     UserAccelerometerEvent event;
     Timer timer;
     StreamSubscription accel;
-
-    var list_x = new List(selection);
-    var list_y = new List(selection);
-    var list_z = new List(selection);
-    var list_time = new List(selection);
-    var tempSelection = selection;
 
     print("START");
     int count = 0;
@@ -345,23 +341,11 @@ class Test extends State<TestPage> {
       accel.resume();
     }
     if (timer == null || !timer.isActive) {
-      timer = Timer.periodic(Duration(milliseconds: 1000), (_) {
-        if (count == tempSelection) {
+      timer = Timer.periodic(Duration(milliseconds: 100), (_) {
+        if (count == numData) {
           timer.cancel();
           accel.pause();
-          print("x");
-          print(list_x);
-          print("y");
-          print(list_y);
-          print("z");
-          print(list_z);
-          print("time");
-          print(list_time);
         } else {
-          list_x[count] = event.x;
-          list_y[count] = event.y;
-          list_z[count] = event.z;
-          list_time[count] = count.toDouble();
           chartData[count] =
               Data(count.toDouble(), event.x, event.y, event.z);
           count++;
@@ -370,14 +354,19 @@ class Test extends State<TestPage> {
         }
       });
     }
-    tests[time] = chartData;
     return chartData;
   }
 
   Timer _timer;
 
   void _startTimer() {
-    chartData = getChartData();
+    chartDataOpen = getChartData();
+    testsOpen[time] = chartDataOpen;
+
+    //TODO: need the UI team to figure out how to repeat the start timer function with chartDataClosed
+    chartDataClosed = getChartData();
+    testsClosed[time] = chartDataClosed;
+
     if (_timer != null) {
       _timer.cancel();
     }
@@ -740,34 +729,78 @@ class Graph extends State<GraphPage>{
                       Navigator.of(context).pushNamed("/");
                     }),
               ]),
-
-          body: SfCartesianChart(
-            title: ChartTitle(text: 'Accelerometer Data'),
-            legend: Legend(isVisible: true),
-            backgroundColor: Colors.white,
-            series: <ChartSeries>[
-              LineSeries<Data, double>(
-                  name: 'x',
-                  dataSource: tests[selectedChart],
-                  xValueMapper: (Data data, _) => data.time,
-                  yValueMapper: (Data data, _) => data.x,
-                  dataLabelSettings: DataLabelSettings(isVisible: true)),
-              LineSeries<Data, double>(
-                  name: 'y',
-                  dataSource: tests[selectedChart],
-                  xValueMapper: (Data data, _) => data.time,
-                  yValueMapper: (Data data, _) => data.y,
-                  dataLabelSettings: DataLabelSettings(isVisible: true)),
-              LineSeries<Data, double>(
-                  name: 'z',
-                  dataSource: tests[selectedChart],
-                  xValueMapper: (Data data, _) => data.time,
-                  yValueMapper: (Data data, _) => data.z,
-                  dataLabelSettings: DataLabelSettings(isVisible: true))
-            ],
-            primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
-            primaryYAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
-          ),
+            body: ListView(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 14*(MediaQuery.of(context).size.height/2)/16,
+                      child: SfCartesianChart(
+                        title: ChartTitle(text: 'Eyes Open Accelerometer Data'),
+                        legend: Legend(isVisible: true),
+                        backgroundColor: Colors.white,
+                        series: <ChartSeries>[
+                          LineSeries<Data, double>(
+                              name: 'x',
+                              dataSource: testsOpen[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.x,
+                              dataLabelSettings: DataLabelSettings(isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'y',
+                              dataSource: testsOpen[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.y,
+                              dataLabelSettings: DataLabelSettings(
+                                  isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'z',
+                              dataSource: testsOpen[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.z,
+                              dataLabelSettings: DataLabelSettings(isVisible: false))
+                        ],
+                        primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
+                        primaryYAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 14*(MediaQuery.of(context).size.height/2)/16,
+                      child: SfCartesianChart(
+                        title: ChartTitle(text: 'Eyes Closed Accelerometer Data'),
+                        legend: Legend(isVisible: true),
+                        backgroundColor: Colors.white,
+                        series: <ChartSeries>[
+                          LineSeries<Data, double>(
+                              name: 'x',
+                              dataSource: testsClosed[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.x,
+                              dataLabelSettings: DataLabelSettings(isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'y',
+                              dataSource: testsClosed[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.y,
+                              dataLabelSettings: DataLabelSettings(
+                                  isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'z',
+                              dataSource: testsClosed[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.z,
+                              dataLabelSettings: DataLabelSettings(isVisible: false))
+                        ],
+                        primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
+                        primaryYAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )
         ));
   }
 }
