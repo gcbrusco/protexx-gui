@@ -14,7 +14,6 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (BuildContext context) => Home(),
-        '/complete' : (BuildContext context) => Complete(),
         '/new' : (BuildContext context) => NewTest(),
         '/data' : (BuildContext context) => DataPage(),
         '/retake' : (BuildContext context) => RetakeTest(),
@@ -90,62 +89,6 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  } // Widget
-}
-
-class Complete extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
-      home: Scaffold(
-        body: Column(
-          children: [
-            Container(
-                width: double.infinity,
-                margin: EdgeInsets.all(10),
-                child: Text(
-                  'Your test is complete. Please choose an option '
-                      'from the selection below',
-                  style: TextStyle(color: Colors.white, fontSize: 28),
-                  textAlign: TextAlign.center,
-                )),
-            RaisedButton.icon(
-              label: Text('See Data'),
-              icon: Icon(Icons.add_circle_rounded, color: Colors.black),
-              textColor: Colors.white,
-              splashColor: Colors.red,
-              color: Colors.red,
-              padding: EdgeInsets.all(5),
-              onPressed: () {
-                Navigator.of(context).pushNamed("/data");
-              },
-            ),
-            RaisedButton.icon(
-              label: Text('Retake Test'),
-              icon: Icon(Icons.bar_chart_rounded, color: Colors.black),
-              textColor: Colors.white,
-              splashColor: Colors.red,
-              color: Colors.red,
-              padding: EdgeInsets.all(5),
-              onPressed: () {
-                Navigator.of(context).pushNamed("/new");
-              },
-            ),
-          ],
-        ),
-        appBar:
-        AppBar(title: Text('Test Complete'),
-            backgroundColor: Colors.red,
-            actions: <Widget>[
-              IconButton(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/");
-                  }),
-            ]),
       ),
     );
   } // Widget
