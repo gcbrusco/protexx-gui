@@ -18,7 +18,8 @@ void main() {
         '/data' : (BuildContext context) => DataPage(),
         '/retake' : (BuildContext context) => RetakeTest(),
         '/time' : (BuildContext context) => TimePage(),
-        '/test': (BuildContext context) => TestPage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
         '/compare': (BuildContext context) => ComparePage(),
         '/graph': (BuildContext context) => GraphPage(),
       },
@@ -106,7 +107,9 @@ class NewTest extends StatelessWidget {
                 width: double.infinity,
                 margin: EdgeInsets.all(10),
                 child: Text(
-                  'Follow the directions on the screen.',
+                  'Follow the directions on the screen. For the first test, '
+                      'please keep your eyes open. For the second test, keep your '
+                      'eyes closed.',
                   style: TextStyle(color: Colors.white, fontSize: 28),
                   textAlign: TextAlign.center,
                 )),
@@ -291,7 +294,7 @@ class Time extends State<TimePage> {
               ),
               onPressed: () {
                 Navigator.of(context).pushNamed(
-                  '/test',
+                  '/test1',
                   arguments: dropdownValue,
                 );
               },
@@ -303,20 +306,23 @@ class Time extends State<TimePage> {
   }
 }
 
-class TestPage extends StatefulWidget {
-  Test createState() => Test();
+class TestPage1 extends StatefulWidget {
+  Test1 createState() => Test1();
 }
 
-class Test extends State<TestPage> {
+class Test1 extends State<TestPage1> {
   int selection;
+  int length;
+  DateTime time = DateTime.now();
   List<Data> chartDataOpen;
   List<Data> chartDataClosed;
-  DateTime time = DateTime.now();
+
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     selection = ModalRoute.of(context).settings.arguments;
+    length = ModalRoute.of(context).settings.arguments;
   }
 
 
@@ -382,10 +388,6 @@ class Test extends State<TestPage> {
     chartDataOpen = getChartData();
     testsOpen[time] = chartDataOpen;
 
-    //TODO: need the UI team to figure out how to repeat the start timer function with chartDataClosed
-    chartDataClosed = getChartData();
-    testsClosed[time] = chartDataClosed;
-
     if (_timer != null) {
       _timer.cancel();
     }
@@ -402,6 +404,7 @@ class Test extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
@@ -419,6 +422,16 @@ class Test extends State<TestPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  "Keep your eyes open for this test.",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
               (selection > 0)
                   ? Text("")
                   : Text(
@@ -446,7 +459,181 @@ class Test extends State<TestPage> {
                   minimumSize: Size(30, 30),
                 ),
                 onPressed: () => _startTimer(),
-                child: Text("Begin Test"),
+                child: Text("Begin Test 1"),
+              )
+                  : ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  shape: const BeveledRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  minimumSize: Size(30, 30),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    '/test2',
+                    arguments: {
+                      'Time': time,
+                      'Selection': length
+                    },);
+                },
+                child: Text("Take Second Test"),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TestPage2 extends StatefulWidget {
+  @override
+  Test2 createState() => Test2();
+}
+
+class Test2 extends State<TestPage2> {
+  List<Data> chartDataClosed;
+
+  Map info = {};
+
+  @override
+  List<Data> getChartData() {
+    //TODO: Make sure the data list has the # of element because right now it only works with 10 sec tests
+    //find accelerometer data
+    int numData = (10*info['Selection'])+1;
+    List<Data> chartData = new List(numData);
+    UserAccelerometerEvent event;
+    Timer timer;
+    StreamSubscription accel;
+
+    double vx;
+    double vy;
+    double vz;
+    double powerX;
+    double powerY;
+    double powerZ;
+
+    int count = 0;
+    if (accel == null) {
+      accel = userAccelerometerEvents.listen((UserAccelerometerEvent eve) {
+        setState(() {
+          event = eve;
+        });
+      });
+    } else {
+      accel.resume();
+    }
+    if (timer == null || !timer.isActive) {
+      timer = Timer.periodic(Duration(milliseconds: 100), (_) {
+        if (count == numData) {
+          timer.cancel();
+          accel.pause();
+        } else {
+          chartData[count] =
+              Data(count.toDouble(), event.x, event.y, event.z, 0);
+
+          if (count == 0){
+            vx = 0;
+            vy = 0;
+            vz = 0;
+          } else {
+            vx = (chartData[count].x - chartData[count - 1].x) * .1;
+            vy = (chartData[count].y - chartData[count - 1].y) * .1;
+            vz = (chartData[count].z - chartData[count - 1].z) * .1;
+          }
+          powerX = vx * chartData[count].x;
+          powerY = vy * chartData[count].y;
+          powerZ = vz * chartData[count].z;
+          chartData[count].power = (powerX+powerY+powerZ)/3;
+
+          count++;
+        }
+      });
+    }
+    return chartData;
+  }
+
+  Timer _timer;
+
+  void _startTimer() {
+    chartDataClosed = getChartData();
+    testsClosed[info['Time']] = chartDataClosed;
+
+    if (_timer != null) {
+      _timer.cancel();
+    }
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (info['Selection'] > 0) {
+          info['Selection']--;
+        } else {
+          _timer.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    info = ModalRoute.of(context).settings.arguments;
+    int choice = info['Selection'];
+
+    return MaterialApp(
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
+      home: Scaffold(
+        appBar: AppBar(
+            title: Text('Protxx App'),
+            backgroundColor: Colors.red,
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed("/");
+                  }),
+            ]),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: Text(
+                  "Keep your eyes closed for this test.",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+              (info['Selection'] > 0)
+                  ? Text("")
+                  : Text(
+                "DONE!",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 48,
+                ),
+              ),
+              Text(
+                '$choice',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 48,
+                ),
+              ),
+              (info['Selection'] > 0)
+                  ? ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  shape: const BeveledRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  minimumSize: Size(30, 30),
+                ),
+                onPressed: () => _startTimer(),
+                child: Text("Begin Test 2"),
               )
                   : ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -459,7 +646,7 @@ class Test extends State<TestPage> {
                   //TODO: CHANGE TO PREVIOUS TEST PAGE
                   Navigator.of(context).pushNamed(
                     '/graph',
-                    arguments: time,
+                    arguments: info['Time'],
                   );
                 },
                 child: Text("See Results"),
@@ -471,6 +658,8 @@ class Test extends State<TestPage> {
     );
   }
 }
+
+
 
 class ComparePage extends StatefulWidget {
   Compare createState() => Compare();
