@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:sensors/sensors.dart';
 import 'package:time/time.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:vibration/vibration.dart';
 
 Map<DateTime, List<Data>> testsOpen = new Map();
 Map<DateTime, List<Data>> testsClosed = new Map();
@@ -14,10 +17,10 @@ void main() {
       initialRoute: '/',
       routes: {
         '/': (BuildContext context) => Home(),
-        '/new' : (BuildContext context) => NewTest(),
-        '/data' : (BuildContext context) => DataPage(),
-        '/retake' : (BuildContext context) => RetakeTest(),
-        '/time' : (BuildContext context) => TimePage(),
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
         '/compare': (BuildContext context) => ComparePage(),
@@ -31,10 +34,21 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compare': (BuildContext context) => ComparePage(),
+        '/graph': (BuildContext context) => GraphPage(),
+        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
-            title: Text('Welcome to PROTXX'),
+            title: Text('Welcome'),
             backgroundColor: Colors.red,
             actions: <Widget>[
               IconButton(
@@ -99,6 +113,17 @@ class NewTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compare': (BuildContext context) => ComparePage(),
+        '/graph': (BuildContext context) => GraphPage(),
+        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         body: Column(
@@ -126,7 +151,8 @@ class NewTest extends StatelessWidget {
             ),
           ],
         ),
-        appBar: AppBar(title: Text('PROTXX Test'),
+        appBar: AppBar(
+            title: Text('New Test'),
             backgroundColor: Colors.red,
             actions: <Widget>[
               IconButton(
@@ -140,19 +166,30 @@ class NewTest extends StatelessWidget {
   } // Widget
 }
 
-class DataPage extends StatelessWidget {
+class DataPage extends StatefulWidget {
+  DataP createState() => DataP();
+}
+class DataP extends State<DataPage> {
   final List names = testsOpen.keys.toList();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compare': (BuildContext context) => ComparePage(),
         '/graph': (BuildContext context) => GraphPage(),
+        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
       },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
           appBar: AppBar(
-              title: Text("Data"),
+              title: Text("Previous Data"),
               backgroundColor: Colors.red,
               actions: <Widget>[
                 IconButton(
@@ -165,13 +202,15 @@ class DataPage extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             itemCount: names.length,
             itemBuilder: (context, index) {
-              return new Card (
+              return new Card(
                 child: new ListTile(
                   tileColor: Colors.red,
-                  trailing: Icon(Icons.insert_chart_outlined, color: Colors.white),
+                  trailing:
+                  Icon(Icons.insert_chart_outlined, color: Colors.white),
                   title: FlatButton(
-                    child: new Text('${names[index].month}/${names[index].day}/${names[index].year}'
-                        ' at ${names[index].hour}:${names[index].minute}',
+                    child: new Text(
+                      '${names[index].month}/${names[index].day}/${names[index].year}'
+                          ' at ${names[index].hour}:${names[index].minute}',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                       textAlign: TextAlign.left,
                     ),
@@ -181,7 +220,8 @@ class DataPage extends StatelessWidget {
                         arguments: names[index],
                       );
                     },
-                  ),),
+                  ),
+                ),
               );
             },
             separatorBuilder: (context, index) {
@@ -198,15 +238,13 @@ class RetakeTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text("Retake Test"),
-          actions: <Widget>[
-            IconButton(
-                icon: const Icon(Icons.home),
-                onPressed: () {
-                  Navigator.of(context).pushNamed("/");
-                }),
-          ]),
+      appBar: AppBar(title: Text("Retake Test"), actions: <Widget>[
+        IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.of(context).pushNamed("/");
+            }),
+      ]),
     );
   }
 }
@@ -214,17 +252,27 @@ class RetakeTest extends StatelessWidget {
 class TimePage extends StatefulWidget {
   Time createState() => Time();
 }
-
 class Time extends State<TimePage> {
   int dropdownValue = 10;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compare': (BuildContext context) => ComparePage(),
+        '/graph': (BuildContext context) => GraphPage(),
+        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
-            title: Text('Protxx App'),
+            title: Text('Time Selection'),
             backgroundColor: Colors.red,
             actions: <Widget>[
               IconButton(
@@ -309,14 +357,12 @@ class Time extends State<TimePage> {
 class TestPage1 extends StatefulWidget {
   Test1 createState() => Test1();
 }
-
 class Test1 extends State<TestPage1> {
   int selection;
   int length;
   DateTime time = DateTime.now();
   List<Data> chartDataOpen;
   List<Data> chartDataClosed;
-
 
   @override
   void didChangeDependencies() {
@@ -325,11 +371,10 @@ class Test1 extends State<TestPage1> {
     length = ModalRoute.of(context).settings.arguments;
   }
 
-
   List<Data> getChartData() {
     //TODO: Make sure the data list has the # of element because right now it only works with 10 sec tests
     //find accelerometer data
-    int numData = (10*selection)+1;
+    int numData = (10 * selection) + 1;
     List<Data> chartData = new List(numData);
     UserAccelerometerEvent event;
     Timer timer;
@@ -361,7 +406,7 @@ class Test1 extends State<TestPage1> {
           chartData[count] =
               Data(count.toDouble(), event.x, event.y, event.z, 0);
 
-          if (count == 0){
+          if (count == 0) {
             vx = 0;
             vy = 0;
             vz = 0;
@@ -373,7 +418,7 @@ class Test1 extends State<TestPage1> {
           powerX = vx * chartData[count].x;
           powerY = vy * chartData[count].y;
           powerZ = vz * chartData[count].z;
-          chartData[count].power = (powerX+powerY+powerZ)/3;
+          chartData[count].power = (powerX + powerY + powerZ) / 3;
 
           count++;
         }
@@ -396,6 +441,8 @@ class Test1 extends State<TestPage1> {
         if (selection > 0) {
           selection--;
         } else {
+          FlutterRingtonePlayer.playNotification();
+          Vibration.vibrate();
           _timer.cancel();
         }
       });
@@ -404,12 +451,22 @@ class Test1 extends State<TestPage1> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compare': (BuildContext context) => ComparePage(),
+        '/graph': (BuildContext context) => GraphPage(),
+        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
-            title: Text('Protxx App'),
+            title: Text('Eyes Open Test'),
             backgroundColor: Colors.red,
             actions: <Widget>[
               IconButton(
@@ -471,10 +528,8 @@ class Test1 extends State<TestPage1> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     '/test2',
-                    arguments: {
-                      'Time': time,
-                      'Selection': length
-                    },);
+                    arguments: {'Time': time, 'Selection': length},
+                  );
                 },
                 child: Text("Take Second Test"),
               )
@@ -490,7 +545,6 @@ class TestPage2 extends StatefulWidget {
   @override
   Test2 createState() => Test2();
 }
-
 class Test2 extends State<TestPage2> {
   List<Data> chartDataClosed;
 
@@ -500,7 +554,7 @@ class Test2 extends State<TestPage2> {
   List<Data> getChartData() {
     //TODO: Make sure the data list has the # of element because right now it only works with 10 sec tests
     //find accelerometer data
-    int numData = (10*info['Selection'])+1;
+    int numData = (10 * info['Selection']) + 1;
     List<Data> chartData = new List(numData);
     UserAccelerometerEvent event;
     Timer timer;
@@ -532,7 +586,7 @@ class Test2 extends State<TestPage2> {
           chartData[count] =
               Data(count.toDouble(), event.x, event.y, event.z, 0);
 
-          if (count == 0){
+          if (count == 0) {
             vx = 0;
             vy = 0;
             vz = 0;
@@ -544,7 +598,7 @@ class Test2 extends State<TestPage2> {
           powerX = vx * chartData[count].x;
           powerY = vy * chartData[count].y;
           powerZ = vz * chartData[count].z;
-          chartData[count].power = (powerX+powerY+powerZ)/3;
+          chartData[count].power = (powerX + powerY + powerZ) / 3;
 
           count++;
         }
@@ -567,6 +621,8 @@ class Test2 extends State<TestPage2> {
         if (info['Selection'] > 0) {
           info['Selection']--;
         } else {
+          FlutterRingtonePlayer.playNotification();
+          Vibration.vibrate();
           _timer.cancel();
         }
       });
@@ -575,15 +631,25 @@ class Test2 extends State<TestPage2> {
 
   @override
   Widget build(BuildContext context) {
-
     info = ModalRoute.of(context).settings.arguments;
     int choice = info['Selection'];
 
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compare': (BuildContext context) => ComparePage(),
+        '/graph': (BuildContext context) => GraphPage(),
+        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
-            title: Text('Protxx App'),
+            title: Text('Eyes Closed Test'),
             backgroundColor: Colors.red,
             actions: <Widget>[
               IconButton(
@@ -659,18 +725,23 @@ class Test2 extends State<TestPage2> {
   }
 }
 
-
-
 class ComparePage extends StatefulWidget {
   Compare createState() => Compare();
 }
-
 class Compare extends State<ComparePage> {
   String gender = 'Male';
   int age = 0;
   String condition = 'Concussion';
   int severity = 0;
-  bool eyesOpen = true;
+
+
+  DateTime selectedChart;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedChart = ModalRoute.of(context).settings.arguments;
+  }
 
   void changeRadioValue(String value) {
     setState(() {
@@ -690,21 +761,26 @@ class Compare extends State<ComparePage> {
     });
   }
 
-  void changeVisionCondition(bool value) {
-    setState(() {
-      eyesOpen = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        routes: {
+          '/new': (BuildContext context) => NewTest(),
+          '/data': (BuildContext context) => DataPage(),
+          '/retake': (BuildContext context) => RetakeTest(),
+          '/time': (BuildContext context) => TimePage(),
+          '/test1': (BuildContext context) => TestPage1(),
+          '/test2': (BuildContext context) => TestPage2(),
+          '/compare': (BuildContext context) => ComparePage(),
+          '/graph': (BuildContext context) => GraphPage(),
+          '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        },
         theme: new ThemeData(
             scaffoldBackgroundColor: const Color(0xFFFF),
             unselectedWidgetColor: Colors.red),
         home: Scaffold(
             appBar: AppBar(
-                title: Text('Protxx App'),
+                title: Text('Mock Test Options'),
                 backgroundColor: Colors.red,
                 actions: <Widget>[
                   IconButton(
@@ -848,47 +924,443 @@ class Compare extends State<ComparePage> {
                     label: severity.round().toString(),
                     onChanged: changeSeverityValue,
                   ),
+
                   Container(
                     padding: const EdgeInsets.only(top: 20),
-                    child: Text(
-                      "Vision status:",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        shape: const BeveledRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        minimumSize: Size(30, 30),
                       ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          '/compareMenu',
+                        );
+                      },
+                      child: Text("Continue"),
                     ),
                   ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Radio(
-                          value: true,
-                          groupValue: eyesOpen,
-                          onChanged: changeVisionCondition,
-                        ),
-                        Text(
-                          'Eyes open',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                ]))));
+  }
+}
+
+class GraphPage extends StatefulWidget {
+  Graph createState() => Graph();
+}
+class Graph extends State<GraphPage> {
+  DateTime selectedChart;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedChart = ModalRoute.of(context).settings.arguments;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        routes: {
+          '/new': (BuildContext context) => NewTest(),
+          '/data': (BuildContext context) => DataPage(),
+          '/retake': (BuildContext context) => RetakeTest(),
+          '/time': (BuildContext context) => TimePage(),
+          '/test1': (BuildContext context) => TestPage1(),
+          '/test2': (BuildContext context) => TestPage2(),
+          '/compare': (BuildContext context) => ComparePage(),
+          '/graph': (BuildContext context) => GraphPage(),
+          '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        },
+        theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
+        home: Scaffold(
+            appBar: AppBar(
+                title: Text('Data Display'),
+                backgroundColor: Colors.red,
+                actions: <Widget>[
+                  IconButton(
+                      icon: const Icon(Icons.home),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/");
+                      }),
+                ]),
+            body: ListView(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height:
+                      12 * (MediaQuery.of(context).size.height / 2) / 16,
+                      child: SfCartesianChart(
+                        title: ChartTitle(text: 'Eyes Open Accelerometer Data'),
+                        legend: Legend(isVisible: true),
+                        backgroundColor: Colors.white,
+                        series: <ChartSeries>[
+                          LineSeries<Data, double>(
+                              name: 'x',
+                              dataSource: testsOpen[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.x,
+                              dataLabelSettings:
+                              DataLabelSettings(isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'y',
+                              dataSource: testsOpen[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.y,
+                              dataLabelSettings:
+                              DataLabelSettings(isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'z',
+                              dataSource: testsOpen[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.z,
+                              dataLabelSettings:
+                              DataLabelSettings(isVisible: false))
+                        ],
+                        primaryXAxis: NumericAxis(
+                            edgeLabelPlacement: EdgeLabelPlacement.shift),
+                        primaryYAxis: NumericAxis(
+                            edgeLabelPlacement: EdgeLabelPlacement.shift),
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height:
+                      12 * (MediaQuery.of(context).size.height / 2) / 16,
+                      child: SfCartesianChart(
+                        title:
+                        ChartTitle(text: 'Eyes Closed Accelerometer Data'),
+                        legend: Legend(isVisible: true),
+                        backgroundColor: Colors.white,
+                        series: <ChartSeries>[
+                          LineSeries<Data, double>(
+                              name: 'x',
+                              dataSource: testsClosed[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.x,
+                              dataLabelSettings:
+                              DataLabelSettings(isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'y',
+                              dataSource: testsClosed[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.y,
+                              dataLabelSettings:
+                              DataLabelSettings(isVisible: false)),
+                          LineSeries<Data, double>(
+                              name: 'z',
+                              dataSource: testsClosed[selectedChart],
+                              xValueMapper: (Data data, _) => data.time,
+                              yValueMapper: (Data data, _) => data.z,
+                              dataLabelSettings:
+                              DataLabelSettings(isVisible: false))
+                        ],
+                        primaryXAxis: NumericAxis(
+                            edgeLabelPlacement: EdgeLabelPlacement.shift),
+                        primaryYAxis: NumericAxis(
+                            edgeLabelPlacement: EdgeLabelPlacement.shift),
+                      ),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            padding: const EdgeInsets.only(top: 10, right: 15),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                                shape: const BeveledRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                                minimumSize: Size(30, 30),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/data');
+                              },
+                              child: Text("Previous Data"),
+                            ),
                           ),
-                        ),
-                        Radio(
-                          value: false,
-                          groupValue: eyesOpen,
-                          onChanged: changeVisionCondition,
-                        ),
-                        Text(
-                          'Eyes closed',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
+                          Container(
+                            padding: const EdgeInsets.only(top: 10, left: 15),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                                shape: const BeveledRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                                minimumSize: Size(30, 30),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pushNamed('/compare',
+                                    arguments: selectedChart);
+                              },
+                              child: Text("Compare Data"),
+                            ),
                           ),
-                        ),
-                      ]),
+                        ]),
+                  ],
+                ),
+              ],
+            )));
+  }
+}
+
+class CompareMenuPage extends StatefulWidget {
+  CompareMenu createState() => CompareMenu();
+}
+class CompareMenu extends State<CompareMenuPage> {
+  DateTime selectedChart;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    selectedChart = ModalRoute.of(context).settings.arguments;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/retake': (BuildContext context) => RetakeTest(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compare': (BuildContext context) => ComparePage(),
+        '/graph': (BuildContext context) => GraphPage(),
+        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+      },
+
+      home: Scaffold(
+        body: ListView(
+          children: <Widget>[
+            Container(
+              child: Text('Selected Data',style: TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+              ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width/2,
+                  height:
+                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  child: SfCartesianChart(
+                    title:
+                    ChartTitle(text: 'Eyes Open'),
+                    legend: Legend(isVisible: true),
+                    backgroundColor: Colors.white,
+                    series: <ChartSeries>[
+                      LineSeries<Data, double>(
+                          name: 'x',
+                          dataSource: testsOpen[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.x,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'y',
+                          dataSource: testsOpen[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.y,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'z',
+                          dataSource: testsOpen[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.z,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false))
+                    ],
+                    primaryXAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                    primaryYAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width/2,
+                  height:
+                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  child: SfCartesianChart(
+                    title:
+                    ChartTitle(text: 'Eyes Closed'),
+                    legend: Legend(isVisible: true),
+                    backgroundColor: Colors.white,
+                    series: <ChartSeries>[
+                      LineSeries<Data, double>(
+                          name: 'x',
+                          dataSource: testsClosed[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.x,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'y',
+                          dataSource: testsClosed[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.y,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'z',
+                          dataSource: testsClosed[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.z,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false))
+                    ],
+                    primaryXAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                    primaryYAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('    Mock Data',style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                ),
+                  textAlign: TextAlign.center,
+                ),
+                Column(
+                    children: <Widget>[
+                      Text('Gender:            ',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                      ),
+                      Text('Age:            ',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                      ),
+                      Text('Condition:            ',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                      ),
+                      Text('Severity:            ',style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                      ),
+                    ]),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width/2,
+                  height:
+                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  child: SfCartesianChart(
+                    title:
+                    ChartTitle(text: 'Eyes Open'),
+                    legend: Legend(isVisible: true),
+                    backgroundColor: Colors.white,
+                    series: <ChartSeries>[
+                      LineSeries<Data, double>(
+                          name: 'x',
+                          dataSource: testsOpen[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.x,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'y',
+                          dataSource: testsOpen[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.y,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'z',
+                          dataSource: testsOpen[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.z,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false))
+                    ],
+                    primaryXAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                    primaryYAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width/2,
+                  height:
+                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  child: SfCartesianChart(
+                    title:
+                    ChartTitle(text: 'Eyes Closed'),
+                    legend: Legend(isVisible: true),
+                    backgroundColor: Colors.white,
+                    series: <ChartSeries>[
+                      LineSeries<Data, double>(
+                          name: 'x',
+                          dataSource: testsClosed[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.x,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'y',
+                          dataSource: testsClosed[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.y,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false)),
+                      LineSeries<Data, double>(
+                          name: 'z',
+                          dataSource: testsClosed[selectedChart],
+                          xValueMapper: (Data data, _) => data.time,
+                          yValueMapper: (Data data, _) => data.z,
+                          dataLabelSettings:
+                          DataLabelSettings(isVisible: false))
+                    ],
+                    primaryXAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                    primaryYAxis: NumericAxis(
+                        edgeLabelPlacement: EdgeLabelPlacement.shift),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget> [
                   Container(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(left: 20),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        shape: const BeveledRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
+                        minimumSize: Size(30, 30),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(
+                          '/data',
+                        );
+                      },
+                      child: Text("Select new data"),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(right: 20),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
@@ -901,116 +1373,26 @@ class Compare extends State<ComparePage> {
                           '/compare',
                         );
                       },
-
-                      child: Text("Continue"),
+                      child: Text("Select new mock test"),
                     ),
                   ),
-                ]))));
-  }
-}
-
-class GraphPage extends StatefulWidget {
-  Graph createState() => Graph();
-}
-
-class Graph extends State<GraphPage>{
-  DateTime selectedChart;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    selectedChart = ModalRoute.of(context).settings.arguments;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
-        home: Scaffold(
-          appBar: AppBar(
-              title: Text('Welcome to PROTXX'),
-              backgroundColor: Colors.red,
-              actions: <Widget>[
-                IconButton(
-                    icon: const Icon(Icons.home),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed("/");
-                    }),
-              ]),
-            body: ListView(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 14*(MediaQuery.of(context).size.height/2)/16,
-                      child: SfCartesianChart(
-                        title: ChartTitle(text: 'Eyes Open Accelerometer Data'),
-                        legend: Legend(isVisible: true),
-                        backgroundColor: Colors.white,
-                        series: <ChartSeries>[
-                          LineSeries<Data, double>(
-                              name: 'x',
-                              dataSource: testsOpen[selectedChart],
-                              xValueMapper: (Data data, _) => data.time,
-                              yValueMapper: (Data data, _) => data.x,
-                              dataLabelSettings: DataLabelSettings(isVisible: false)),
-                          LineSeries<Data, double>(
-                              name: 'y',
-                              dataSource: testsOpen[selectedChart],
-                              xValueMapper: (Data data, _) => data.time,
-                              yValueMapper: (Data data, _) => data.y,
-                              dataLabelSettings: DataLabelSettings(
-                                  isVisible: false)),
-                          LineSeries<Data, double>(
-                              name: 'z',
-                              dataSource: testsOpen[selectedChart],
-                              xValueMapper: (Data data, _) => data.time,
-                              yValueMapper: (Data data, _) => data.z,
-                              dataLabelSettings: DataLabelSettings(isVisible: false))
-                        ],
-                        primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
-                        primaryYAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 14*(MediaQuery.of(context).size.height/2)/16,
-                      child: SfCartesianChart(
-                        title: ChartTitle(text: 'Eyes Closed Accelerometer Data'),
-                        legend: Legend(isVisible: true),
-                        backgroundColor: Colors.white,
-                        series: <ChartSeries>[
-                          LineSeries<Data, double>(
-                              name: 'x',
-                              dataSource: testsClosed[selectedChart],
-                              xValueMapper: (Data data, _) => data.time,
-                              yValueMapper: (Data data, _) => data.x,
-                              dataLabelSettings: DataLabelSettings(isVisible: false)),
-                          LineSeries<Data, double>(
-                              name: 'y',
-                              dataSource: testsClosed[selectedChart],
-                              xValueMapper: (Data data, _) => data.time,
-                              yValueMapper: (Data data, _) => data.y,
-                              dataLabelSettings: DataLabelSettings(
-                                  isVisible: false)),
-                          LineSeries<Data, double>(
-                              name: 'z',
-                              dataSource: testsClosed[selectedChart],
-                              xValueMapper: (Data data, _) => data.time,
-                              yValueMapper: (Data data, _) => data.z,
-                              dataLabelSettings: DataLabelSettings(isVisible: false))
-                        ],
-                        primaryXAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
-                        primaryYAxis: NumericAxis(edgeLabelPlacement: EdgeLabelPlacement.shift),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ]
             )
-        ));
-  }
+          ],
+        ),
+        appBar: AppBar(
+            title: Text('Compare Data'),
+            backgroundColor: Colors.red,
+            actions: <Widget>[
+              IconButton(
+                  icon: const Icon(Icons.home),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed("/");
+                  }),
+            ]),
+      ),
+    );
+  } // Widget
 }
 
 class Data {
