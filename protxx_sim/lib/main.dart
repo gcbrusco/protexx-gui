@@ -23,8 +23,9 @@ void main() {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
     ),
   );
@@ -41,9 +42,9 @@ class Home extends StatelessWidget {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
-        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
@@ -91,17 +92,6 @@ class Home extends StatelessWidget {
                 Navigator.of(context).pushNamed("/data");
               },
             ),
-            RaisedButton.icon(
-              label: Text('Compare Results'),
-              icon: Icon(Icons.info, color: Colors.black),
-              textColor: Colors.white,
-              splashColor: Colors.red,
-              color: Colors.red,
-              padding: EdgeInsets.all(5),
-              onPressed: () {
-                Navigator.of(context).pushNamed("/compare");
-              },
-            ),
           ],
         ),
       ),
@@ -120,9 +110,9 @@ class NewTest extends StatelessWidget {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
-        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
@@ -169,6 +159,7 @@ class NewTest extends StatelessWidget {
 class DataPage extends StatefulWidget {
   DataP createState() => DataP();
 }
+
 class DataP extends State<DataPage> {
   final List names = testsOpen.keys.toList();
 
@@ -182,9 +173,9 @@ class DataP extends State<DataPage> {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
-        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
@@ -209,7 +200,8 @@ class DataP extends State<DataPage> {
                   Icon(Icons.insert_chart_outlined, color: Colors.white),
                   title: FlatButton(
                     child: new Text(
-                      '${names[index].month}/${names[index].day}/${names[index].year}'
+                      '${names[index].month}/${names[index].day}/${names[index]
+                          .year}'
                           ' at ${names[index].hour}:${names[index].minute}',
                       style: TextStyle(color: Colors.white, fontSize: 18),
                       textAlign: TextAlign.left,
@@ -252,6 +244,7 @@ class RetakeTest extends StatelessWidget {
 class TimePage extends StatefulWidget {
   Time createState() => Time();
 }
+
 class Time extends State<TimePage> {
   int dropdownValue = 10;
 
@@ -265,9 +258,9 @@ class Time extends State<TimePage> {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
-        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
@@ -357,6 +350,7 @@ class Time extends State<TimePage> {
 class TestPage1 extends StatefulWidget {
   Test1 createState() => Test1();
 }
+
 class Test1 extends State<TestPage1> {
   int selection;
   int length;
@@ -367,8 +361,14 @@ class Test1 extends State<TestPage1> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selection = ModalRoute.of(context).settings.arguments;
-    length = ModalRoute.of(context).settings.arguments;
+    selection = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
+    length = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
   }
 
   List<Data> getChartData() {
@@ -459,9 +459,9 @@ class Test1 extends State<TestPage1> {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
-        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
@@ -545,6 +545,7 @@ class TestPage2 extends StatefulWidget {
   @override
   Test2 createState() => Test2();
 }
+
 class Test2 extends State<TestPage2> {
   List<Data> chartDataClosed;
 
@@ -632,6 +633,7 @@ class Test2 extends State<TestPage2> {
   @override
   Widget build(BuildContext context) {
     info = ModalRoute.of(context).settings.arguments;
+
     int choice = info['Selection'];
 
     return MaterialApp(
@@ -642,9 +644,9 @@ class Test2 extends State<TestPage2> {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
-        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
@@ -725,10 +727,11 @@ class Test2 extends State<TestPage2> {
   }
 }
 
-class ComparePage extends StatefulWidget {
-  Compare createState() => Compare();
+class CompareMenuPage extends StatefulWidget {
+  CompareMenu createState() => CompareMenu();
 }
-class Compare extends State<ComparePage> {
+
+class CompareMenu extends State<CompareMenuPage> {
   String gender = 'Male';
   int age = 0;
   String condition = 'Concussion';
@@ -740,7 +743,10 @@ class Compare extends State<ComparePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedChart = ModalRoute.of(context).settings.arguments;
+    selectedChart = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
   }
 
   void changeRadioValue(String value) {
@@ -771,9 +777,9 @@ class Compare extends State<ComparePage> {
           '/time': (BuildContext context) => TimePage(),
           '/test1': (BuildContext context) => TestPage1(),
           '/test2': (BuildContext context) => TestPage2(),
-          '/compare': (BuildContext context) => ComparePage(),
+          '/compareMenu': (BuildContext context) => CompareMenuPage(),
           '/graph': (BuildContext context) => GraphPage(),
-          '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+          '/compare': (BuildContext context) => ComparePage(),
         },
         theme: new ThemeData(
             scaffoldBackgroundColor: const Color(0xFFFF),
@@ -936,7 +942,10 @@ class Compare extends State<ComparePage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
-                          '/compareMenu',
+                          '/compare',
+                          arguments: {'chart' : selectedChart, 'Age' : age,
+                            'Gender' : gender, 'Condition' : condition,
+                            'Severity' : severity,}
                         );
                       },
                       child: Text("Continue"),
@@ -949,6 +958,7 @@ class Compare extends State<ComparePage> {
 class GraphPage extends StatefulWidget {
   Graph createState() => Graph();
 }
+
 class Graph extends State<GraphPage> {
   DateTime selectedChart;
 
@@ -968,9 +978,9 @@ class Graph extends State<GraphPage> {
           '/time': (BuildContext context) => TimePage(),
           '/test1': (BuildContext context) => TestPage1(),
           '/test2': (BuildContext context) => TestPage2(),
-          '/compare': (BuildContext context) => ComparePage(),
+          '/compareMenu': (BuildContext context) => CompareMenuPage(),
           '/graph': (BuildContext context) => GraphPage(),
-          '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+          '/compare': (BuildContext context) => ComparePage(),
         },
         theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
         home: Scaffold(
@@ -989,9 +999,15 @@ class Graph extends State<GraphPage> {
                 Column(
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
                       height:
-                      12 * (MediaQuery.of(context).size.height / 2) / 16,
+                      12 * (MediaQuery
+                          .of(context)
+                          .size
+                          .height / 2) / 16,
                       child: SfCartesianChart(
                         title: ChartTitle(text: 'Eyes Open Accelerometer Data'),
                         legend: Legend(isVisible: true),
@@ -1026,9 +1042,15 @@ class Graph extends State<GraphPage> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
                       height:
-                      12 * (MediaQuery.of(context).size.height / 2) / 16,
+                      12 * (MediaQuery
+                          .of(context)
+                          .size
+                          .height / 2) / 16,
                       child: SfCartesianChart(
                         title:
                         ChartTitle(text: 'Eyes Closed Accelerometer Data'),
@@ -1093,8 +1115,9 @@ class Graph extends State<GraphPage> {
                                 minimumSize: Size(30, 30),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/compare',
-                                    arguments: selectedChart);
+                                Navigator.of(context).pushNamed('/compareMenu',
+                                  arguments: selectedChart,
+                                );
                               },
                               child: Text("Compare Data"),
                             ),
@@ -1107,20 +1130,16 @@ class Graph extends State<GraphPage> {
   }
 }
 
-class CompareMenuPage extends StatefulWidget {
-  CompareMenu createState() => CompareMenu();
+class ComparePage extends StatefulWidget {
+  Compare createState() => Compare();
 }
-class CompareMenu extends State<CompareMenuPage> {
-  DateTime selectedChart;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    selectedChart = ModalRoute.of(context).settings.arguments;
-  }
+class Compare extends State<ComparePage> {
+  Map info = {};
 
   @override
   Widget build(BuildContext context) {
+    info = ModalRoute.of(context).settings.arguments;
     return MaterialApp(
       routes: {
         '/new': (BuildContext context) => NewTest(),
@@ -1129,16 +1148,16 @@ class CompareMenu extends State<CompareMenuPage> {
         '/time': (BuildContext context) => TimePage(),
         '/test1': (BuildContext context) => TestPage1(),
         '/test2': (BuildContext context) => TestPage2(),
-        '/compare': (BuildContext context) => ComparePage(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
         '/graph': (BuildContext context) => GraphPage(),
-        '/compareMenu' : (BuildContext context) => CompareMenuPage(),
+        '/compare': (BuildContext context) => ComparePage(),
       },
 
       home: Scaffold(
         body: ListView(
           children: <Widget>[
             Container(
-              child: Text('Selected Data',style: TextStyle(
+              child: Text('Selected Data', style: TextStyle(
                 color: Colors.black,
                 fontSize: 30,
               ),
@@ -1148,9 +1167,15 @@ class CompareMenu extends State<CompareMenuPage> {
             Row(
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width/2,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 2,
                   height:
-                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  11 * (MediaQuery
+                      .of(context)
+                      .size
+                      .height / 2) / 16,
                   child: SfCartesianChart(
                     title:
                     ChartTitle(text: 'Eyes Open'),
@@ -1159,21 +1184,21 @@ class CompareMenu extends State<CompareMenuPage> {
                     series: <ChartSeries>[
                       LineSeries<Data, double>(
                           name: 'x',
-                          dataSource: testsOpen[selectedChart],
+                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.x,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'y',
-                          dataSource: testsOpen[selectedChart],
+                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.y,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'z',
-                          dataSource: testsOpen[selectedChart],
+                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.z,
                           dataLabelSettings:
@@ -1186,9 +1211,15 @@ class CompareMenu extends State<CompareMenuPage> {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width/2,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 2,
                   height:
-                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  11 * (MediaQuery
+                      .of(context)
+                      .size
+                      .height / 2) / 16,
                   child: SfCartesianChart(
                     title:
                     ChartTitle(text: 'Eyes Closed'),
@@ -1197,21 +1228,21 @@ class CompareMenu extends State<CompareMenuPage> {
                     series: <ChartSeries>[
                       LineSeries<Data, double>(
                           name: 'x',
-                          dataSource: testsClosed[selectedChart],
+                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.x,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'y',
-                          dataSource: testsClosed[selectedChart],
+                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.y,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'z',
-                          dataSource: testsClosed[selectedChart],
+                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.z,
                           dataLabelSettings:
@@ -1228,7 +1259,7 @@ class CompareMenu extends State<CompareMenuPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('    Mock Data',style: TextStyle(
+                Text('    Mock Data', style: TextStyle(
                   color: Colors.black,
                   fontSize: 30,
                 ),
@@ -1236,22 +1267,26 @@ class CompareMenu extends State<CompareMenuPage> {
                 ),
                 Column(
                     children: <Widget>[
-                      Text('Gender:            ',style: TextStyle(
+                      Text('Gender:  ${info['Gender']}',
+                        style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                       ),
                       ),
-                      Text('Age:            ',style: TextStyle(
+                      Text('Age: ${info['Age']}',
+                        style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                       ),
                       ),
-                      Text('Condition:            ',style: TextStyle(
+                      Text('Condition: ${info['Condition']}',
+                        style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                       ),
                       ),
-                      Text('Severity:            ',style: TextStyle(
+                      Text('Severity: ${info['Severity']}',
+                        style: TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                       ),
@@ -1262,9 +1297,15 @@ class CompareMenu extends State<CompareMenuPage> {
             Row(
               children: <Widget>[
                 Container(
-                  width: MediaQuery.of(context).size.width/2,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 2,
                   height:
-                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  11 * (MediaQuery
+                      .of(context)
+                      .size
+                      .height / 2) / 16,
                   child: SfCartesianChart(
                     title:
                     ChartTitle(text: 'Eyes Open'),
@@ -1273,21 +1314,21 @@ class CompareMenu extends State<CompareMenuPage> {
                     series: <ChartSeries>[
                       LineSeries<Data, double>(
                           name: 'x',
-                          dataSource: testsOpen[selectedChart],
+                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.x,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'y',
-                          dataSource: testsOpen[selectedChart],
+                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.y,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'z',
-                          dataSource: testsOpen[selectedChart],
+                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.z,
                           dataLabelSettings:
@@ -1300,9 +1341,15 @@ class CompareMenu extends State<CompareMenuPage> {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width/2,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width / 2,
                   height:
-                  11 * (MediaQuery.of(context).size.height / 2) / 16,
+                  11 * (MediaQuery
+                      .of(context)
+                      .size
+                      .height / 2) / 16,
                   child: SfCartesianChart(
                     title:
                     ChartTitle(text: 'Eyes Closed'),
@@ -1311,21 +1358,21 @@ class CompareMenu extends State<CompareMenuPage> {
                     series: <ChartSeries>[
                       LineSeries<Data, double>(
                           name: 'x',
-                          dataSource: testsClosed[selectedChart],
+                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.x,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'y',
-                          dataSource: testsClosed[selectedChart],
+                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.y,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'z',
-                          dataSource: testsClosed[selectedChart],
+                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.z,
                           dataLabelSettings:
@@ -1341,7 +1388,7 @@ class CompareMenu extends State<CompareMenuPage> {
             ),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget> [
+                children: <Widget>[
                   Container(
                     padding: const EdgeInsets.only(left: 20),
                     child: ElevatedButton(
@@ -1370,7 +1417,8 @@ class CompareMenu extends State<CompareMenuPage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
-                          '/compare',
+                            '/compare',
+                            arguments: [info['chart']],
                         );
                       },
                       child: Text("Select new mock test"),
