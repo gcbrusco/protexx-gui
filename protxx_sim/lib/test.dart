@@ -31,6 +31,7 @@ class Test1 extends State<TestPage1> {
     length = ModalRoute.of(context).settings.arguments;
   }
 
+
   List<Data> getChartData() {
     //TODO: Make sure the data list has the # of element because right now it only works with 10 sec tests
     //find accelerometer data
@@ -156,8 +157,8 @@ class Test1 extends State<TestPage1> {
                   fontSize: 48,
                 ),
               ),
-              (selection > 0)
-                  ? ElevatedButton(
+              if(selection == length)
+                   ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                   shape: const BeveledRectangleBorder(
@@ -167,7 +168,8 @@ class Test1 extends State<TestPage1> {
                 onPressed: () => _startTimer(),
                 child: Text("Begin Test 1"),
               )
-                  : ElevatedButton(
+              else if (selection <= 0 )
+                ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                   shape: const BeveledRectangleBorder(
@@ -284,6 +286,7 @@ class Test2 extends State<TestPage2> {
     info = ModalRoute.of(context).settings.arguments;
 
     int choice = info['Selection'];
+    int length = info['Selection'];
 
     return MaterialApp(
       routes: {
@@ -341,8 +344,8 @@ class Test2 extends State<TestPage2> {
                   fontSize: 48,
                 ),
               ),
-              (info['Selection'] > 0)
-                  ? ElevatedButton(
+              if (info['Selection'] == length)
+                  ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                   shape: const BeveledRectangleBorder(
@@ -352,7 +355,8 @@ class Test2 extends State<TestPage2> {
                 onPressed: () => _startTimer(),
                 child: Text("Begin Test 2"),
               )
-                  : ElevatedButton(
+              else if(info['Selection'] <= 0)
+                ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                   shape: const BeveledRectangleBorder(
