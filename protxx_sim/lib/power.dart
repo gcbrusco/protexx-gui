@@ -27,17 +27,6 @@ class Power extends State<PowerPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        routes: {
-          '/new': (BuildContext context) => NewTest(),
-          '/data': (BuildContext context) => DataPage(),
-          '/time': (BuildContext context) => TimePage(),
-          '/test1': (BuildContext context) => TestPage1(),
-          '/test2': (BuildContext context) => TestPage2(),
-          '/compareMenu': (BuildContext context) => CompareMenuPage(),
-          '/graph': (BuildContext context) => GraphPage(),
-          '/compare': (BuildContext context) => ComparePage(),
-          '/power': (BuildContext context) => PowerPage(),
-        },
         theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
         home: Scaffold(
             appBar: AppBar(
