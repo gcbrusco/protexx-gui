@@ -75,9 +75,9 @@ class Test1 extends State<TestPage1> {
             vy = (chartData[count].y - chartData[count - 1].y) * .1;
             vz = (chartData[count].z - chartData[count - 1].z) * .1;
           }
-          powerX = vx * chartData[count].x;
-          powerY = vy * chartData[count].y;
-          powerZ = vz * chartData[count].z;
+          powerX = (vx * chartData[count].x).abs();
+          powerY = (vy * chartData[count].y).abs();
+          powerZ = (vz * chartData[count].z).abs();
           chartData[count].power = (powerX + powerY + powerZ) / 3;
 
           count++;
