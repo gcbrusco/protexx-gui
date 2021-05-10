@@ -119,11 +119,12 @@ class Test1 extends State<TestPage1> {
             title: Text('Eyes Open Test'),
             backgroundColor: Colors.red,
             actions: <Widget>[
-              IconButton(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/");
-                  }),
+              if(selection == length)
+                IconButton(
+                    icon: const Icon(Icons.home),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("/");
+                    }),
             ]),
         body: Center(
           child: Column(
@@ -158,32 +159,32 @@ class Test1 extends State<TestPage1> {
                 ),
               ),
               if(selection == length)
-                   ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  minimumSize: Size(30, 30),
-                ),
-                onPressed: () => _startTimer(),
-                child: Text("Begin Test 1"),
-              )
-              else if (selection <= 0 )
                 ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  minimumSize: Size(30, 30),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    '/test2',
-                    arguments: {'Time': time, 'Selection': length},
-                  );
-                },
-                child: Text("Take Second Test"),
-              )
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    minimumSize: Size(30, 30),
+                  ),
+                  onPressed: () => _startTimer(),
+                  child: Text("Begin Test 1"),
+                )
+              else if (selection <= 0)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    minimumSize: Size(30, 30),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      '/test2',
+                      arguments: {'Time': time, 'Selection': length, 'orig_Selection': length},
+                    );
+                  },
+                  child: Text("Take Second Test"),
+                )
             ],
           ),
         ),
@@ -286,20 +287,25 @@ class Test2 extends State<TestPage2> {
     info = ModalRoute.of(context).settings.arguments;
 
     int choice = info['Selection'];
-    int length = info['Selection'];
 
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(),
+        '/data': (BuildContext context) => DataPage(),
+        '/time': (BuildContext context) => TimePage(),
+        '/test1': (BuildContext context) => TestPage1(),
+        '/test2': (BuildContext context) => TestPage2(),
+        '/compareMenu': (BuildContext context) => CompareMenuPage(),
+        '/graph': (BuildContext context) => GraphPage(),
+        '/compare': (BuildContext context) => ComparePage(),
+        '/power': (BuildContext context) => PowerPage(),
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
             title: Text('Eyes Closed Test'),
             backgroundColor: Colors.red,
             actions: <Widget>[
-              IconButton(
-                  icon: const Icon(Icons.home),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/');
-                  }),
             ]),
         body: Center(
           child: Column(
@@ -333,34 +339,35 @@ class Test2 extends State<TestPage2> {
                   fontSize: 48,
                 ),
               ),
-              if (info['Selection'] == length)
+              if (info['Selection'] == info['orig_Selection'])
                 ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  minimumSize: Size(30, 30),
-                ),
-                onPressed: () => _startTimer(),
-                child: Text("Begin Test 2"),
-              )
-              else if (info['Selection'] < 1)
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    minimumSize: Size(30, 30),
+                  ),
+                  onPressed: () => _startTimer(),
+                  child: Text("Begin Test 2"),
+                )
+              else if (info['Selection'] <= 0)
                 ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  shape: const BeveledRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  minimumSize: Size(30, 30),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    shape: const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    minimumSize: Size(30, 30),
+                  ),
+                  onPressed: () {
+                    //TODO: CHANGE TO PREVIOUS TEST PAGE
+                    Navigator.of(context).pushNamed(
+                      '/graph',
+                      arguments: info['Time'],
+                    );
+                  },
+                  child: Text("See Results"),
                 ),
-                onPressed: () {
-                  //TODO: CHANGE TO PREVIOUS TEST PAGE
-                  Navigator.of(context).pushNamed(
-                    '/graph',
-                    arguments: info['Time'],
-                  );
-                },
-                child: Text("See Results"),
-              )
+
             ],
           ),
         ),
