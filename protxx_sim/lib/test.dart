@@ -289,17 +289,6 @@ class Test2 extends State<TestPage2> {
     int length = info['Selection'];
 
     return MaterialApp(
-      routes: {
-        '/new': (BuildContext context) => NewTest(),
-        '/data': (BuildContext context) => DataPage(),
-        '/time': (BuildContext context) => TimePage(),
-        '/test1': (BuildContext context) => TestPage1(),
-        '/test2': (BuildContext context) => TestPage2(),
-        '/compareMenu': (BuildContext context) => CompareMenuPage(),
-        '/graph': (BuildContext context) => GraphPage(),
-        '/compare': (BuildContext context) => ComparePage(),
-        '/power': (BuildContext context) => PowerPage(),
-      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
@@ -309,7 +298,7 @@ class Test2 extends State<TestPage2> {
               IconButton(
                   icon: const Icon(Icons.home),
                   onPressed: () {
-                    Navigator.of(context).pushNamed("/");
+                    Navigator.of(context).pushNamed('/');
                   }),
             ]),
         body: Center(
@@ -345,7 +334,7 @@ class Test2 extends State<TestPage2> {
                 ),
               ),
               if (info['Selection'] == length)
-                  ElevatedButton(
+                ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                   shape: const BeveledRectangleBorder(
@@ -355,7 +344,7 @@ class Test2 extends State<TestPage2> {
                 onPressed: () => _startTimer(),
                 child: Text("Begin Test 2"),
               )
-              else if(info['Selection'] <= 0)
+              else if (info['Selection'] < 1)
                 ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
