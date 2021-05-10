@@ -1,14 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'new_test.dart';
-import 'compare.dart';
-import 'power.dart';
-import 'graph.dart';
-import 'compare_menu.dart';
-import 'data_page.dart';
-import 'test.dart';
-
-
 class TimePage extends StatefulWidget {
   Time createState() => Time();
 }

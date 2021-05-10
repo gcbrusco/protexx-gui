@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'new_test.dart';
-import 'compare.dart';
-import 'power.dart';
-import 'graph.dart';
-import 'data_page.dart';
-import 'test.dart';
-import 'time.dart';
-
 class CompareMenuPage extends StatefulWidget {
   CompareMenu createState() => CompareMenu();
 }

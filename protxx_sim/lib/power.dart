@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'new_test.dart';
 import 'data.dart';
 import 'compare.dart';
-import 'graph.dart';
-import 'compare_menu.dart';
-import 'data_page.dart';
-
-import 'test.dart';
-import 'time.dart';
 
 class PowerPage extends StatefulWidget {
   Power createState() => Power();
