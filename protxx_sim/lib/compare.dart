@@ -86,8 +86,14 @@ class Compare extends State<ComparePage> {
                           DataLabelSettings(isVisible: false))
                     ],
                     primaryXAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'time (s)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                     primaryYAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'acceleration (m/s^2)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                   ),
                 ),
@@ -122,8 +128,14 @@ class Compare extends State<ComparePage> {
                           DataLabelSettings(isVisible: false))
                     ],
                     primaryXAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'time (s)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                     primaryYAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'acceleration (m/s^2)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                   ),
                 ),
@@ -186,29 +198,32 @@ class Compare extends State<ComparePage> {
                     series: <ChartSeries>[
                       LineSeries<Data, double>(
                           name: 'x',
-                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.x,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'y',
-                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.y,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'z',
-                          dataSource: testsOpen[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.z,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false))
                     ],
                     primaryXAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'time (s)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                     primaryYAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'acceleration (m/s^2)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                   ),
                 ),
@@ -222,29 +237,32 @@ class Compare extends State<ComparePage> {
                     series: <ChartSeries>[
                       LineSeries<Data, double>(
                           name: 'x',
-                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.x,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'y',
-                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.y,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false)),
                       LineSeries<Data, double>(
                           name: 'z',
-                          dataSource: testsClosed[info['chart']],
                           xValueMapper: (Data data, _) => data.time,
                           yValueMapper: (Data data, _) => data.z,
                           dataLabelSettings:
                           DataLabelSettings(isVisible: false))
                     ],
                     primaryXAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'time (s)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                     primaryYAxis: NumericAxis(
+                        title: AxisTitle(
+                          text: 'acceleration (m/s^2)',
+                        ),
                         edgeLabelPlacement: EdgeLabelPlacement.shift),
                   ),
                 ),

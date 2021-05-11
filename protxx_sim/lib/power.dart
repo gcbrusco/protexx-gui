@@ -74,8 +74,14 @@ class Power extends State<PowerPage> {
                               DataLabelSettings(isVisible: false)),
                         ],
                         primaryXAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'time (s)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                         primaryYAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'power (J/s)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                       ),
                     ),
@@ -98,8 +104,14 @@ class Power extends State<PowerPage> {
                               DataLabelSettings(isVisible: false)),
                         ],
                         primaryXAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'time (s)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                         primaryYAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'power (J/s)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                       ),
                     ),

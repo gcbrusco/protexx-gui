@@ -57,7 +57,7 @@ class Graph extends State<GraphPage> {
                 Column(
                   children: <Widget>[
                     Container(
-                      //size of grapgh
+                      //size of graph
                       width: MediaQuery.of(context).size.width,
                       height:
                       12 * (MediaQuery.of(context).size.height / 2) / 16,
@@ -68,8 +68,6 @@ class Graph extends State<GraphPage> {
                         series: <ChartSeries>[
                           LineSeries<Data, double>( //assign values to x and y coordinates of graph
                               name: 'x',
-                              xAxisName: 'acceleration (m/ms^2)',
-                              yAxisName: 'time (ms)',
                               dataSource: testsOpen[selectedChart],
                               xValueMapper: (Data data, _) => data.time,
                               yValueMapper: (Data data, _) => data.x,
@@ -91,8 +89,14 @@ class Graph extends State<GraphPage> {
                               DataLabelSettings(isVisible: false))
                         ],
                         primaryXAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'time (s)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                         primaryYAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'acceleration (m/s^2)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                       ),
                     ),
@@ -108,8 +112,6 @@ class Graph extends State<GraphPage> {
                         series: <ChartSeries>[
                           LineSeries<Data, double>(
                               name: 'x',
-                              xAxisName: 'power (J/ms)',
-                              yAxisName: 'time (ms)',
                               dataSource: testsClosed[selectedChart],
                               xValueMapper: (Data data, _) => data.time,
                               yValueMapper: (Data data, _) => data.x,
@@ -131,15 +133,22 @@ class Graph extends State<GraphPage> {
                               DataLabelSettings(isVisible: false))
                         ],
                         primaryXAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'time (s)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                         primaryYAxis: NumericAxis(
+                            title: AxisTitle(
+                              text: 'acceleration (m/s^2)',
+                            ),
                             edgeLabelPlacement: EdgeLabelPlacement.shift),
                       ),
                     ),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
+                          Expanded(
+                          child: Container(
                             padding: const EdgeInsets.only(top: 10, right: 15),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -149,10 +158,13 @@ class Graph extends State<GraphPage> {
                               onPressed: () {
                                 Navigator.of(context).pushNamed('/data'); //navigate to past data page
                               },
-                              child: Text("Previous Data"),
+                              child: Text("Previous Data",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                          Container(
+                          ),),
+                          Expanded(
+                          child: Container(
                             padding: const EdgeInsets.only(top: 10, right: 5, left: 5),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -164,10 +176,13 @@ class Graph extends State<GraphPage> {
                                   arguments: selectedChart,
                                 );
                               },
-                              child: Text("Power Graph"),
+                              child: Text("Power Graph",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
-                          Container(
+                          ),),
+                          Expanded(
+                            child: Container(
                             padding: const EdgeInsets.only(top: 10, left: 15),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -180,13 +195,15 @@ class Graph extends State<GraphPage> {
                                   arguments: selectedChart,
                                 );
                               },
-                              child: Text("Compare Data"),
+                              child: Text("Compare Data",
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
+                          ),),
                         ]),
                   ],
                 ),
               ],
-            )));
+    )));
   }
 }
