@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'new_test.dart';
 import 'data.dart';
-import 'power.dart';
-import 'graph.dart';
-import 'compare_menu.dart';
-import 'data_page.dart';
-import 'test.dart';
-import 'time.dart';
 
 Map<DateTime, List<Data>> testsOpen = new Map();
 Map<DateTime, List<Data>> testsClosed = new Map();
@@ -24,17 +17,6 @@ class Compare extends State<ComparePage> {
   Widget build(BuildContext context) {
     info = ModalRoute.of(context).settings.arguments;
     return MaterialApp(
-      routes: {
-        '/new': (BuildContext context) => NewTest(),
-        '/data': (BuildContext context) => DataPage(),
-        '/time': (BuildContext context) => TimePage(),
-        '/test1': (BuildContext context) => TestPage1(),
-        '/test2': (BuildContext context) => TestPage2(),
-        '/compareMenu': (BuildContext context) => CompareMenuPage(),
-        '/graph': (BuildContext context) => GraphPage(),
-        '/compare': (BuildContext context) => ComparePage(),
-        '/power': (BuildContext context) => PowerPage(),
-      },
       home: Scaffold(
         body: ListView(
           children: <Widget>[
