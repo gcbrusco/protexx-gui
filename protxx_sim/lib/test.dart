@@ -162,8 +162,6 @@ class Test1 extends State<TestPage1> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red,
-                    shape: const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
                     minimumSize: Size(30, 30),
                   ),
                   onPressed: () => _startTimer(),
@@ -173,8 +171,6 @@ class Test1 extends State<TestPage1> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red,
-                    shape: const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
                     minimumSize: Size(30, 30),
                   ),
                   onPressed: () {
@@ -287,6 +283,7 @@ class Test2 extends State<TestPage2> {
     info = ModalRoute.of(context).settings.arguments;
 
     int choice = info['Selection'];
+    int length = info['const_Selection'];
 
     return MaterialApp(
       routes: {
@@ -343,8 +340,6 @@ class Test2 extends State<TestPage2> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red,
-                    shape: const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
                     minimumSize: Size(30, 30),
                   ),
                   onPressed: () => _startTimer(),
@@ -354,8 +349,6 @@ class Test2 extends State<TestPage2> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red,
-                    shape: const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
                     minimumSize: Size(30, 30),
                   ),
                   onPressed: () {
