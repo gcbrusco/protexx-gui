@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'new_test.dart';
 import 'compare.dart';
 import 'power.dart';

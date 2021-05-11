@@ -58,7 +58,7 @@ class NewTest extends StatelessWidget {
               IconButton(
                   icon: const Icon(Icons.home),
                   onPressed: () {
-                    Navigator.of(context).pushNamed("/");
+                    Navigator.of(context).pushNamed("/home");
                   }),
             ]),
       ),
