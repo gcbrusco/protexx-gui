@@ -3,6 +3,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'data.dart';
 
+
+//two maps for two separate tests (eyes open, eyes closed) key-> datetime of test, value: data values
 Map<DateTime, List<Data>> testsOpen = new Map();
 Map<DateTime, List<Data>> testsClosed = new Map();
 
@@ -11,16 +13,17 @@ class ComparePage extends StatefulWidget {
 }
 
 class Compare extends State<ComparePage> {
+  //graphical display of user data compared to mock tests data
   Map info = {};
 
   @override
   Widget build(BuildContext context) {
-    info = ModalRoute.of(context).settings.arguments;
+    info = ModalRoute.of(context).settings.arguments; //store passed data in info
     return MaterialApp(
       home: Scaffold(
         body: ListView(
           children: <Widget>[
-            Container(
+            Container( //title of graph
               child: Text(
                 'Selected Data',
                 style: TextStyle(
@@ -30,23 +33,24 @@ class Compare extends State<ComparePage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Row(
+            Row( //user graphs
               children: <Widget>[
                 Container(
+                  //size of graph
                   width: MediaQuery.of(context).size.width / 2,
                   height: 11 * (MediaQuery.of(context).size.height / 2) / 16,
-                  child: SfCartesianChart(
+                  child: SfCartesianChart( //graph widget
                     title: ChartTitle(text: 'Eyes Open'),
                     legend: Legend(isVisible: true),
                     backgroundColor: Colors.white,
                     series: <ChartSeries>[
                       LineSeries<Data, double>(
                           name: 'x',
-                          dataSource: testsOpen[info['chart']],
-                          xValueMapper: (Data data, _) => data.time,
-                          yValueMapper: (Data data, _) => data.x,
+                          dataSource: testsOpen[info['chart']], //data points
+                          xValueMapper: (Data data, _) => data.time, //x axis values
+                          yValueMapper: (Data data, _) => data.x, //y axis values
                           dataLabelSettings:
-                          DataLabelSettings(isVisible: false)),
+                          DataLabelSettings(isVisible: false)), //ignore data labels
                       LineSeries<Data, double>(
                           name: 'y',
                           dataSource: testsOpen[info['chart']],
@@ -107,7 +111,8 @@ class Compare extends State<ComparePage> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //row of text for mock test data labels
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, //space across page evenly
               children: <Widget>[
                 Text(
                   '    Mock Data',
@@ -118,6 +123,7 @@ class Compare extends State<ComparePage> {
                   textAlign: TextAlign.center,
                 ),
                 Column(children: <Widget>[
+                  //list parameters selected from previous page
                   Text(
                     'Gender:  ${info['Gender']}', textAlign: TextAlign.left,
                     style: TextStyle(
@@ -226,6 +232,7 @@ class Compare extends State<ComparePage> {
               ],
             ),
             Row(
+              //row of buttons to navigate across screens
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
@@ -237,7 +244,7 @@ class Compare extends State<ComparePage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
-                          '/data',
+                          '/data', //page to select new user data
                         );
                       },
                       child: Text("Select new data"),
@@ -252,7 +259,7 @@ class Compare extends State<ComparePage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
-                          '/compareMenu',
+                          '/compareMenu', //page to change mock test data
                           arguments: info['chart'],
                         );
                       },
@@ -263,6 +270,7 @@ class Compare extends State<ComparePage> {
           ],
         ),
         appBar: AppBar(
+          //top of page app bar
             title: Text('Compare Data'),
             backgroundColor: Colors.red,
             actions: <Widget>[
