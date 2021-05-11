@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'new_test.dart';
 import 'data.dart';
 import 'compare.dart';
-import 'power.dart';
-import 'compare_menu.dart';
-import 'data_page.dart';
-import 'test.dart';
-import 'time.dart';
 
 class GraphPage extends StatefulWidget {
   Graph createState() => Graph();
@@ -141,7 +135,9 @@ class Graph extends State<GraphPage> {
                                 minimumSize: Size(30, 30),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/power');
+                                Navigator.of(context).pushNamed('/power',
+                                  arguments: selectedChart,
+                                );
                               },
                               child: Text("Power Graph"),
                             ),

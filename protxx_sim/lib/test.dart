@@ -61,14 +61,14 @@ class Test1 extends State<TestPage1> {
           chartData[count] =
               Data(count.toDouble(), event.x, event.y, event.z, 0);
 
-          if (count == 0) {
+          if (count <= 4) {
             vx = 0;
             vy = 0;
             vz = 0;
           } else {
-            vx = (chartData[count].x - chartData[count - 1].x) * .1;
-            vy = (chartData[count].y - chartData[count - 1].y) * .1;
-            vz = (chartData[count].z - chartData[count - 1].z) * .1;
+            vx = (chartData[count].x - chartData[count - 4].x) * .4;
+            vy = (chartData[count].y - chartData[count - 4].y) * .4;
+            vz = (chartData[count].z - chartData[count - 4].z) * .4;
           }
           powerX = (vx * chartData[count].x).abs();
           powerY = (vy * chartData[count].y).abs();
@@ -173,7 +173,7 @@ class Test1 extends State<TestPage1> {
                       arguments: {'Time': time, 'Selection': length, 'orig_Selection': length},
                     );
                   },
-                  child: Text("Take Second Test"),
+                  child: Text("Take Test 2"),
                 )
             ],
           ),
@@ -195,7 +195,6 @@ class Test2 extends State<TestPage2> {
 
   @override
   List<Data> getChartData() {
-    //TODO: Make sure the data list has the # of element because right now it only works with 10 sec tests
     //find accelerometer data
     int numData = (10 * info['Selection']) + 1;
     List<Data> chartData = new List(numData);
@@ -229,19 +228,20 @@ class Test2 extends State<TestPage2> {
           chartData[count] =
               Data(count.toDouble(), event.x, event.y, event.z, 0);
 
-          if (count == 0) {
+          if (count <= 4) {
             vx = 0;
             vy = 0;
             vz = 0;
           } else {
-            vx = (chartData[count].x - chartData[count - 1].x) * .1;
-            vy = (chartData[count].y - chartData[count - 1].y) * .1;
-            vz = (chartData[count].z - chartData[count - 1].z) * .1;
+            vx = (chartData[count].x - chartData[count - 4].x) * .4;
+            vy = (chartData[count].y - chartData[count - 4].y) * .4;
+            vz = (chartData[count].z - chartData[count - 4].z) * .4;
           }
-          powerX = vx * chartData[count].x;
-          powerY = vy * chartData[count].y;
-          powerZ = vz * chartData[count].z;
+          powerX = (vx * chartData[count].x).abs();
+          powerY = (vy * chartData[count].y).abs();
+          powerZ = (vz * chartData[count].z).abs();
           chartData[count].power = (powerX + powerY + powerZ) / 3;
+          print(chartData[count].power);
 
           count++;
         }

@@ -42,7 +42,7 @@ class DataP extends State<DataPage> {
                     ),
                     onPressed: () {
                       Navigator.of(context).pushNamed(
-                        "/graph",
+                        '/graph',
                         arguments: names[index],
                       );
                     },

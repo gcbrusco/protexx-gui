@@ -252,7 +252,7 @@ class Compare extends State<ComparePage> {
                       ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
-                          '/compare',
+                          '/compareMenu',
                           arguments: info['chart'],
                         );
                       },

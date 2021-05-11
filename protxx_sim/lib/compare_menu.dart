@@ -193,8 +193,6 @@ class CompareMenu extends State<CompareMenuPage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
-                        shape: const BeveledRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         minimumSize: Size(30, 30),
                       ),
                       onPressed: () {
