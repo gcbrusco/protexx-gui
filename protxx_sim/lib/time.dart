@@ -73,8 +73,6 @@ class Time extends State<TimePage> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.red,
-                shape: const BeveledRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
                 minimumSize: Size(100, 50),
               ),
               child: Text(
