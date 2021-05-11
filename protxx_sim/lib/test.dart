@@ -5,7 +5,15 @@ import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:vibration/vibration.dart';
 
 import 'data.dart';
+import 'new_test.dart';
 import 'compare.dart';
+import 'power.dart';
+import 'graph.dart';
+import 'compare_menu.dart';
+import 'home.dart';
+import 'data_page.dart';
+import 'test.dart';
+import 'time.dart';
 
 class TestPage1 extends StatefulWidget {
   Test1 createState() => Test1();
@@ -107,6 +115,17 @@ class Test1 extends State<TestPage1> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(), //new test page
+        '/data': (BuildContext context) => DataPage(), //past data page
+        '/time': (BuildContext context) => TimePage(), //page to select time
+        '/test1': (BuildContext context) => TestPage1(), //first testing screen
+        '/test2': (BuildContext context) => TestPage2(), //second testing screen
+        '/compareMenu': (BuildContext context) => CompareMenuPage(), //select metrics to compare to
+        '/graph': (BuildContext context) => GraphPage(), //page displaying graphs
+        '/compare': (BuildContext context) => ComparePage(), //page comparing graphs
+        '/power': (BuildContext context) => PowerPage(), //page displaying power graphs
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
@@ -280,6 +299,17 @@ class Test2 extends State<TestPage2> {
     int length = info['const_Selection'];
 
     return MaterialApp(
+      routes: {
+        '/new': (BuildContext context) => NewTest(), //new test page
+        '/data': (BuildContext context) => DataPage(), //past data page
+        '/time': (BuildContext context) => TimePage(), //page to select time
+        '/test1': (BuildContext context) => TestPage1(), //first testing screen
+        '/test2': (BuildContext context) => TestPage2(), //second testing screen
+        '/compareMenu': (BuildContext context) => CompareMenuPage(), //select metrics to compare to
+        '/graph': (BuildContext context) => GraphPage(), //page displaying graphs
+        '/compare': (BuildContext context) => ComparePage(), //page comparing graphs
+        '/power': (BuildContext context) => PowerPage(), //page displaying power graphs
+      },
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
       home: Scaffold(
         appBar: AppBar(
