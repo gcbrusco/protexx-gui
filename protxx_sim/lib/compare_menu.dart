@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'data.dart';
+
 import 'new_test.dart';
 import 'compare.dart';
 import 'power.dart';
 import 'graph.dart';
-import 'compare_menu.dart';
-import 'home.dart';
 import 'data_page.dart';
 import 'test.dart';
 import 'time.dart';
@@ -16,19 +14,22 @@ class CompareMenuPage extends StatefulWidget {
 }
 
 class CompareMenu extends State<CompareMenuPage> {
-  String gender = 'Male';
-  int age = 0;
-  String condition = 'Concussion';
-  int severity = 0;
+  //page to display mock test options
 
-  DateTime selectedChart;
+  String gender = 'Male'; //default gender
+  int age = 0; //default age
+  String condition = 'Concussion'; //default neuro condition
+  int severity = 0; //default severity
+
+  DateTime selectedChart; //data that is passed
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedChart = ModalRoute.of(context).settings.arguments;
+    selectedChart = ModalRoute.of(context).settings.arguments; //assign selectedChart to passed graph data
   }
 
+  //functions to adjust selected variables
   void changeRadioValue(String value) {
     setState(() {
       gender = value;
@@ -62,8 +63,9 @@ class CompareMenu extends State<CompareMenuPage> {
           '/power': (BuildContext context) => PowerPage(), //page displaying power graphs
         },
         theme: new ThemeData(
+          //set background to black
             scaffoldBackgroundColor: const Color(0xFFFF),
-            unselectedWidgetColor: Colors.red),
+            unselectedWidgetColor: Colors.red), //make radio buttons red
         home: Scaffold(
             appBar: AppBar(
                 title: Text('Mock Test Options'),
@@ -89,7 +91,7 @@ class CompareMenu extends State<CompareMenuPage> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Container(
+                  Container( //gender radio button selection
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
                       "Select a gender: ",
@@ -130,7 +132,7 @@ class CompareMenu extends State<CompareMenuPage> {
                           ),
                         )
                       ]),
-                  Container(
+                  Container( //age slider selection
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
                       "Age: ",
@@ -151,7 +153,7 @@ class CompareMenu extends State<CompareMenuPage> {
                     label: age.round().toString(),
                     onChanged: changeAgeValue,
                   ),
-                  Container(
+                  Container( //neuro condition dropdown
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
                       'Neurological Condition: ',
@@ -189,7 +191,7 @@ class CompareMenu extends State<CompareMenuPage> {
                       );
                     }).toList(),
                   ),
-                  Container(
+                  Container( //severity slider
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
                       "Severity: ",
@@ -218,7 +220,7 @@ class CompareMenu extends State<CompareMenuPage> {
                         minimumSize: Size(30, 30),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/compare', arguments: {
+                        Navigator.of(context).pushNamed('/compare', arguments: { //pass selected parameters to compare screen
                           'chart': selectedChart,
                           'Age': age,
                           'Gender': gender,

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'data.dart';
 import 'new_test.dart';
 import 'compare.dart';
 import 'power.dart';
 import 'graph.dart';
 import 'compare_menu.dart';
-import 'home.dart';
-import 'data_page.dart';
 import 'test.dart';
 import 'time.dart';
 
@@ -41,7 +38,7 @@ class DataP extends State<DataPage> {
               title: Text("Previous Data"),
               backgroundColor: Colors.red,
               actions: <Widget>[
-                IconButton(
+                IconButton( //home button
                     icon: const Icon(Icons.home),
                     onPressed: () {
                       Navigator.of(context).pushNamed("/");
@@ -52,7 +49,7 @@ class DataP extends State<DataPage> {
             padding: const EdgeInsets.all(8), //space tests
             itemCount: names.length, //number of tests
             itemBuilder: (context, index) {
-              return new Card(
+              return new Card( //individual card for each test
                 child: new ListTile(
                   tileColor: Colors.red,
                   trailing:

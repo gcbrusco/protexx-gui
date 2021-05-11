@@ -4,10 +4,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'data.dart';
 import 'new_test.dart';
 import 'compare.dart';
-import 'power.dart';
 import 'graph.dart';
 import 'compare_menu.dart';
-import 'home.dart';
 import 'data_page.dart';
 import 'test.dart';
 import 'time.dart';
@@ -17,12 +15,14 @@ class PowerPage extends StatefulWidget {
 }
 
 class Power extends State<PowerPage> {
-  DateTime selectedChart;
+  //page to display power graphs
+
+  DateTime selectedChart; //variable to hold data values
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedChart = ModalRoute.of(context).settings.arguments;
+    selectedChart = ModalRoute.of(context).settings.arguments; //assign selectedChart to passed values
   }
 
   @override
@@ -41,30 +41,31 @@ class Power extends State<PowerPage> {
         },
         theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
         home: Scaffold(
-            appBar: AppBar(
+            appBar: AppBar( //red aoo bar at top of page
                 title: Text('Power Display'),
                 backgroundColor: Colors.red,
                 actions: <Widget>[
                   IconButton(
                       icon: const Icon(Icons.home),
                       onPressed: () {
-                        Navigator.of(context).pushNamed("/");
+                        Navigator.of(context).pushNamed("/"); //home page navigation
                       }),
                 ]),
-            body: ListView(
+            body: ListView( //display power graphs
               children: <Widget>[
-                Column(
+                Column( //column of graphs
                   children: <Widget>[
                     Container(
+                      //size of graph
                       width: MediaQuery.of(context).size.width,
                       height:
                       12 * (MediaQuery.of(context).size.height / 2) / 16,
-                      child: SfCartesianChart(
+                      child: SfCartesianChart( //graph widget
                         title: ChartTitle(text: 'Eyes Open Power Data'),
                         legend: Legend(isVisible: true),
                         backgroundColor: Colors.white,
                         series: <ChartSeries>[
-                          LineSeries<Data, double>(
+                          LineSeries<Data, double>( //assign values from selectedChart to graph x and y coordinates
                               name: 'power',
                               dataSource: testsOpen[selectedChart],
                               xValueMapper: (Data data, _) => data.time,
@@ -126,7 +127,7 @@ class Power extends State<PowerPage> {
                                 minimumSize: Size(30, 30),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed(
+                                Navigator.of(context).pushNamed( //navigate to menu to compare mock tests
                                   '/compareMenu',
                                   arguments: selectedChart,
                                 );

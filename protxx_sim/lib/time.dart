@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
-import 'data.dart';
 import 'new_test.dart';
 import 'compare.dart';
 import 'power.dart';
 import 'graph.dart';
 import 'compare_menu.dart';
-import 'home.dart';
 import 'data_page.dart';
 import 'test.dart';
-import 'time.dart';
 
 class TimePage extends StatefulWidget {
   Time createState() => Time();
 }
 
 class Time extends State<TimePage> {
-  int dropdownValue = 20;
+  //page to select time for length of test
+
+  int dropdownValue = 20; //default dropdown menu value
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +31,20 @@ class Time extends State<TimePage> {
         '/compare': (BuildContext context) => ComparePage(), //page comparing graphs
         '/power': (BuildContext context) => PowerPage(), //page displaying power graphs
       },
-      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)), //set background color to black
       home: Scaffold(
-        appBar: AppBar(
+        appBar: AppBar( //red appbar at top of screen
             title: Text('Time Selection'),
             backgroundColor: Colors.red,
             actions: <Widget>[
-              IconButton(
+              IconButton( //home button
                   icon: const Icon(Icons.home),
                   onPressed: () {
                     Navigator.of(context).pushNamed("/");
                   }),
             ]),
         body: Column(children: [
-          Container(
+          Container( //text to try test
             padding: const EdgeInsets.all(8),
             alignment: Alignment.topCenter,
             child: Text(
@@ -57,7 +56,7 @@ class Time extends State<TimePage> {
               ),
             ),
           ),
-          Container(
+          Container( //text to select length of time
             padding: const EdgeInsets.all(5),
             child: Text(
               "Please select a length of time (seconds)",
@@ -67,7 +66,7 @@ class Time extends State<TimePage> {
               ),
             ),
           ),
-          Container(
+          Container( //dropdown button to select length of time
               padding: const EdgeInsets.all(50),
               child: DropdownButton(
                 icon: const Icon(
@@ -80,17 +79,17 @@ class Time extends State<TimePage> {
                 value: dropdownValue,
                 onChanged: (int newValue) {
                   setState(() {
-                    dropdownValue = newValue;
+                    dropdownValue = newValue; //change value displayed in dropdown
                   });
                 },
-                items: <int>[10, 15, 20, 25, 30].map((int value) {
+                items: <int>[10, 15, 20, 25, 30].map((int value) { //selectable time values
                   return new DropdownMenuItem<int>(
                     value: value,
                     child: new Text(value.toString()),
                   );
                 }).toList(),
               )),
-          Container(
+          Container( //button to navigate to next testing screen
             padding: const EdgeInsets.all(100),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(

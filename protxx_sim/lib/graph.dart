@@ -5,9 +5,7 @@ import 'data.dart';
 import 'new_test.dart';
 import 'compare.dart';
 import 'power.dart';
-import 'graph.dart';
 import 'compare_menu.dart';
-import 'home.dart';
 import 'data_page.dart';
 import 'test.dart';
 import 'time.dart';
@@ -17,12 +15,14 @@ class GraphPage extends StatefulWidget {
 }
 
 class Graph extends State<GraphPage> {
-  DateTime selectedChart;
+  //page to display acceleration graphs
+
+  DateTime selectedChart; //data to be stored from passes value
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    selectedChart = ModalRoute.of(context).settings.arguments;
+    selectedChart = ModalRoute.of(context).settings.arguments; //assigned to passed value
   }
 
   @override
@@ -39,9 +39,10 @@ class Graph extends State<GraphPage> {
           '/compare': (BuildContext context) => ComparePage(), //page comparing graphs
           '/power': (BuildContext context) => PowerPage(), //page displaying power graphs
         },
-        theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
+        theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)), //set background color to black
         home: Scaffold(
             appBar: AppBar(
+              //red app bar at top of page
                 title: Text('Data Display'),
                 backgroundColor: Colors.red,
                 actions: <Widget>[
@@ -56,15 +57,16 @@ class Graph extends State<GraphPage> {
                 Column(
                   children: <Widget>[
                     Container(
+                      //size of grapgh
                       width: MediaQuery.of(context).size.width,
                       height:
                       12 * (MediaQuery.of(context).size.height / 2) / 16,
-                      child: SfCartesianChart(
+                      child: SfCartesianChart( //graph widget
                         title: ChartTitle(text: 'Eyes Open Accelerometer Data'),
                         legend: Legend(isVisible: true),
                         backgroundColor: Colors.white,
                         series: <ChartSeries>[
-                          LineSeries<Data, double>(
+                          LineSeries<Data, double>( //assign values to x and y coordinates of graph
                               name: 'x',
                               xAxisName: 'acceleration (m/ms^2)',
                               yAxisName: 'time (ms)',
@@ -145,7 +147,7 @@ class Graph extends State<GraphPage> {
                                 minimumSize: Size(30, 30),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/data');
+                                Navigator.of(context).pushNamed('/data'); //navigate to past data page
                               },
                               child: Text("Previous Data"),
                             ),
@@ -158,7 +160,7 @@ class Graph extends State<GraphPage> {
                                 minimumSize: Size(30, 30),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/power',
+                                Navigator.of(context).pushNamed('/power', //navigate to power graph page
                                   arguments: selectedChart,
                                 );
                               },
@@ -173,7 +175,7 @@ class Graph extends State<GraphPage> {
                                 minimumSize: Size(30, 30),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed(
+                                Navigator.of(context).pushNamed( //navigate to compare menu page
                                   '/compareMenu',
                                   arguments: selectedChart,
                                 );

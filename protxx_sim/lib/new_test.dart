@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'data.dart';
-import 'new_test.dart';
 import 'compare.dart';
 import 'power.dart';
 import 'graph.dart';
 import 'compare_menu.dart';
-import 'home.dart';
 import 'data_page.dart';
 import 'test.dart';
 import 'time.dart';
@@ -26,21 +23,21 @@ class NewTest extends StatelessWidget {
         '/compare': (BuildContext context) => ComparePage(), //page comparing graphs
         '/power': (BuildContext context) => PowerPage(), //page displaying power graphs
       },
-      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)),
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFF)), //set background to black
       home: Scaffold(
         body: Column(
           children: [
             Container(
                 width: double.infinity,
                 margin: EdgeInsets.all(10),
-                child: Text(
+                child: Text( //new test page directions
                   'Follow the directions on the screen. For the first test, '
                       'please keep your eyes open. For the second test, keep your '
                       'eyes closed.',
                   style: TextStyle(color: Colors.white, fontSize: 28),
                   textAlign: TextAlign.center,
                 )),
-            RaisedButton.icon(
+            RaisedButton.icon( //button to take test
               label: Text('Take Test'),
               icon: Icon(Icons.bar_chart_rounded, color: Colors.black),
               textColor: Colors.white,
@@ -48,12 +45,13 @@ class NewTest extends StatelessWidget {
               color: Colors.red,
               padding: EdgeInsets.all(5),
               onPressed: () {
-                Navigator.of(context).pushNamed("/time");
+                Navigator.of(context).pushNamed("/time"); //got to timing page for first test
               },
             ),
           ],
         ),
         appBar: AppBar(
+          //red app bar at top of page
             title: Text('New Test'),
             backgroundColor: Colors.red,
             actions: <Widget>[
