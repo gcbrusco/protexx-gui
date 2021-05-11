@@ -47,6 +47,8 @@ class Graph extends State<GraphPage> {
                         series: <ChartSeries>[
                           LineSeries<Data, double>(
                               name: 'x',
+                              xAxisName: 'acceleration (m/ms^2)',
+                              yAxisName: 'time (ms)',
                               dataSource: testsOpen[selectedChart],
                               xValueMapper: (Data data, _) => data.time,
                               yValueMapper: (Data data, _) => data.x,
@@ -85,6 +87,8 @@ class Graph extends State<GraphPage> {
                         series: <ChartSeries>[
                           LineSeries<Data, double>(
                               name: 'x',
+                              xAxisName: 'power (J/ms)',
+                              yAxisName: 'time (ms)',
                               dataSource: testsClosed[selectedChart],
                               xValueMapper: (Data data, _) => data.time,
                               yValueMapper: (Data data, _) => data.x,

@@ -59,7 +59,7 @@ class Test1 extends State<TestPage1> {
           accel.pause();
         } else {
           chartData[count] =
-              Data(count.toDouble(), event.x, event.y, event.z, 0);
+              Data(count.toDouble()/10, event.x, event.y, event.z, 0);
 
           if (count <= 4) {
             vx = 0;
@@ -70,9 +70,9 @@ class Test1 extends State<TestPage1> {
             vy = (chartData[count].y - chartData[count - 4].y) * .4;
             vz = (chartData[count].z - chartData[count - 4].z) * .4;
           }
-          powerX = (vx * chartData[count].x).abs();
-          powerY = (vy * chartData[count].y).abs();
-          powerZ = (vz * chartData[count].z).abs();
+          powerX = (vx * chartData[count].x).abs()*.145;
+          powerY = (vy * chartData[count].y).abs()*.145;
+          powerZ = (vz * chartData[count].z).abs()*.145;
           chartData[count].power = (powerX + powerY + powerZ) / 3;
 
           count++;
@@ -226,7 +226,7 @@ class Test2 extends State<TestPage2> {
           accel.pause();
         } else {
           chartData[count] =
-              Data(count.toDouble(), event.x, event.y, event.z, 0);
+              Data(count.toDouble()/10, event.x, event.y, event.z, 0);
 
           if (count <= 4) {
             vx = 0;
@@ -237,9 +237,9 @@ class Test2 extends State<TestPage2> {
             vy = (chartData[count].y - chartData[count - 4].y) * .4;
             vz = (chartData[count].z - chartData[count - 4].z) * .4;
           }
-          powerX = (vx * chartData[count].x).abs();
-          powerY = (vy * chartData[count].y).abs();
-          powerZ = (vz * chartData[count].z).abs();
+          powerX = (vx * chartData[count].x).abs()*.145;
+          powerY = (vy * chartData[count].y).abs()*.145;
+          powerZ = (vz * chartData[count].z).abs()*.145;
           chartData[count].power = (powerX + powerY + powerZ) / 3;
           print(chartData[count].power);
 
