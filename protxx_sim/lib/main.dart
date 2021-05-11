@@ -10,8 +10,6 @@ import 'data_page.dart';
 import 'test.dart';
 import 'time.dart';
 
-
-
 void main() {
   runApp(
     MaterialApp(

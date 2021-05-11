@@ -137,28 +137,28 @@ class Compare extends State<ComparePage> {
                 ),
                 Column(children: <Widget>[
                   Text(
-                    'Gender:  ${info['Gender']}',
+                    'Gender:  ${info['Gender']}', textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
                     ),
                   ),
                   Text(
-                    'Age: ${info['Age']}',
+                    'Age: ${info['Age']}', textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
                     ),
                   ),
                   Text(
-                    'Condition: ${info['Condition']}',
+                    'Condition: ${info['Condition']}', textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
                     ),
                   ),
                   Text(
-                    'Severity: ${info['Severity']}',
+                    'Severity: ${info['Severity']}', textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 12,
@@ -251,8 +251,6 @@ class Compare extends State<ComparePage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
-                        shape: const BeveledRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         minimumSize: Size(30, 30),
                       ),
                       onPressed: () {
@@ -268,14 +266,12 @@ class Compare extends State<ComparePage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
-                        shape: const BeveledRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         minimumSize: Size(30, 30),
                       ),
                       onPressed: () {
                         Navigator.of(context).pushNamed(
                           '/compare',
-                          arguments: [info['chart']],
+                          arguments: info['chart'],
                         );
                       },
                       child: Text("Select new mock test"),
